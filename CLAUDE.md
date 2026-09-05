@@ -1,10 +1,10 @@
-# Job Application Assistant for [YOUR_NAME]
+# Job Application Assistant for Marcus D. Yang
 
 <!-- SETUP: This file is populated by running /setup -->
 <!-- After running /setup, all [PLACEHOLDER] tokens will be replaced with your actual information -->
 
 ## Role
-This repo is a job application workspace. Claude acts as a career advisor and application assistant for [YOUR_NAME], helping with:
+This repo is a job application workspace. Claude acts as a career advisor and application assistant for Marcus D. Yang, helping with:
 1. **Job fit evaluation** - Assess job postings against your profile (skills, experience, behavioral traits)
 2. **CV tailoring** - Adapt existing CV templates (LaTeX/moderncv) to target specific roles
 3. **Cover letter writing** - Draft targeted cover letters using existing templates (LaTeX)
@@ -16,76 +16,70 @@ This repo is a job application workspace. Claude acts as a career advisor and ap
 <!-- This section is auto-populated by /setup. You can also fill it in manually. -->
 
 ### Identity
-- **Name:** [YOUR_NAME]
-- **Location:** [YOUR_CITY], [YOUR_COUNTRY] ([YOUR_COMMUTE_CONSTRAINTS])
+- **Name:** Marcus D. Yang
+- **Location:** Champaign, IL, USA (open to relocating anywhere in the US)
 - **Languages:**
   | Language | Level |
   |----------|-------|
-  | [LANGUAGE] | [LEVEL] |
-  <!-- Every language you work in professionally, with your level (CEFR, "native," "professional
-  working proficiency," whatever your CV/LinkedIn use - no need to force it into one scale). An
-  undeclared language is a hard deal-breaker if a posting requires it; a declared language at a
-  lower level than a posting wants is flagged for your own judgment, not auto-rejected. See
-  04-job-evaluation.md's Language Gate. -->
-- **CV language:** [YOUR_CV_LANGUAGE] <!-- English unless your market expects otherwise; /setup asks -->
+  | English | Native |
+- **CV language:** English
 
-- **Status:** [YOUR_EMPLOYMENT_STATUS]
-- **LinkedIn headline:** "[YOUR_LINKEDIN_HEADLINE]"
+- **Status:** Undergraduate student (rising junior), University of Illinois Urbana-Champaign, expected graduation May 2028. Seeking a paid, in-person Summer 2027 internship in aerospace, mechanical, or manufacturing engineering.
+- **LinkedIn headline:** "Aerospace Engineering Student @ UIUC | Rocketry, Controls & Manufacturing" *(suggested - edit freely on LinkedIn itself)*
 
 ### Education
-<!-- List your degrees, most recent first -->
-- **[DEGREE_LEVEL] in [FIELD]** ([YEAR_START]-[YEAR_END]) - [INSTITUTION]
-  - Thesis: "[THESIS_TITLE]"
-  - Topics: [KEY_TOPICS]
+- **B.S. in Aerospace Engineering, Computer Science Minor (James Scholar Honors)** (2024-2028, in progress, expected May 2028) - University of Illinois Urbana-Champaign
+  - GPA: 3.57/4.0
+  - Topics: Incompressible Flow, Aerospace Control Systems, Aerospace Structures, Thermodynamics, Engineering Materials, Statics, Dynamics, Linear Algebra, Electrical and Electronic Circuits, Discrete Structures
 
 ### Professional Experience
-<!-- List your roles, most recent first -->
-- **[JOB_TITLE]** ([START_DATE] - [END_DATE]) - **[COMPANY]** ([LOCATION])
-  - [KEY_RESPONSIBILITY_1]
-  - [KEY_RESPONSIBILITY_2]
-  - [KEY_ACHIEVEMENT]
+<!-- No formal paid employment yet - these are academic/organizational technical roles. -->
+- **Member** (Spring 2025 - Present) - **Liquid Rocketry at Illinois** (Champaign, IL)
+  - Modeled P&ID system architecture in Siemens NX and integrated components into the pressurant tank assembly
+  - Created CAD geometries for canard-grid fin configurations and ran ANSYS Fluent CFD cases across 0-20 deg deflection
+  - Engineered a KiCad PCB radio transmitter (USB-C + MCU) prototype for ground-test telemetry links
+- **Landing Gear Research Lead** (Summer 2021 - Spring 2024) - **Flight Club Aerospace**
+  - Manufactured wing and control surfaces (foam ribs, aluminum spars, epoxy/fiberglass layups) and aligned two 7-ft wings for flight testing
+  - Modeled gussets and ribs in Fusion 360; coordinated fit-checks between structural and aerodynamic components
+- **Treasurer | Fundraising Officer** (Fall 2024 - Present) - **Asian American Association** (UIUC)
+  - Managed membership operations for 200+ members; secured partnerships with 15 on-campus sponsors
+
+See `.claude/skills/job-application-assistant/01-candidate-profile.md` for full bullet detail and the **TVC Rocket** independent project (solo thrust-vector-control rocket build - the strongest technical/STAR material in the profile).
 
 ### Technical Skills
-- **Primary:** [YOUR_PRIMARY_SKILLS]
-- **Secondary:** [YOUR_SECONDARY_SKILLS]
-- **Domain:** [YOUR_DOMAIN_EXPERTISE]
-- **Software:** [YOUR_TOOLS_AND_SOFTWARE]
+- **Primary:** Python, C++, Siemens NX (CAD), Ansys Fluent (CFD)
+- **Secondary:** Java, JavaScript, Fusion 360, KiCad, Eagle PCB, OpenRocket, XFLR5
+- **Domain:** Aerospace propulsion/aerodynamics/structures, embedded controls (PID, sensor fusion), manufacturing and fabrication (composites, CNC/laser cutting, FDM 3D printing)
+- **Software:** Siemens NX, Fusion 360, Ansys Fluent, XFLR5, OpenRocket, KiCad, Eagle PCB, Excel
 
 ### Certifications
-<!-- List relevant certifications with dates -->
-- **[CERTIFICATION_NAME]** - [HOURS]h - completed [DATE]
+None yet.
 
 ### Publications
-<!-- List peer-reviewed publications, if any -->
-- [AUTHOR_LIST] ([YEAR]). [TITLE]. [JOURNAL].
+None yet.
 
 ### Awards
-<!-- List relevant awards, hackathons, competitions -->
-- [AWARD_NAME] - [EVENT] ([YEAR])
+None recorded yet.
 
 ### Behavioral Profile
-<!-- Your behavioral assessment results (PI, DISC, Myers-Briggs, or self-assessment) -->
-- **[TRAIT_1]** - [DESCRIPTION]
-- **[TRAIT_2]** - [DESCRIPTION]
-- **Strengths:** [YOUR_STRENGTHS]
-- **Growth areas:** [YOUR_GROWTH_AREAS]
-- **Thrives in:** [YOUR_IDEAL_ENVIRONMENT]
+No formal assessment on file. See `02-behavioral-profile.md` for evidence-based notes inferred from project and leadership work.
+- **Strengths:** Independent, self-directed execution on hands-on hardware/firmware projects; evidence-driven troubleshooting (root-causing failures from telemetry rather than guesswork)
+- **Growth areas:** Not yet assessed
+- **Thrives in:** Hands-on design-build-test environments with room to iterate independently
 
 ### What Excites You
-<!-- What motivates you professionally -->
-- [PASSION_1]
-- [PASSION_2]
+- Hands-on design-build-test cycles: CAD/CFD work, hardware fabrication, propulsion and controls systems
+- Manufacturing and fabrication process work
 
 ### Target Sectors
-<!-- Industries and companies you're targeting -->
-- [SECTOR_1]: [EXAMPLE_COMPANIES]
-- [SECTOR_2]: [EXAMPLE_COMPANIES]
+- Aerospace: e.g. SpaceX, Blue Origin, Boeing, Northrop Grumman, Lockheed Martin, Sierra Space, Relativity Space, Firefly Aerospace, Anduril *(suggested - not yet confirmed by the candidate)*
+- Mechanical / Manufacturing: e.g. GE Aerospace, Collins Aerospace, Honeywell Aerospace, Caterpillar, John Deere *(suggested - not yet confirmed by the candidate)*
 
 ### Deal-breakers
 <!-- Hard constraints on job search. Language requirements are handled separately and
 automatically from your Languages table above - don't duplicate them here. -->
-- [DEALBREAKER_1]
-- [DEALBREAKER_2]
+- Unpaid positions
+- Remote-only positions (must be in-person)
 
 ## Repo Structure
 - `cv/` - LaTeX CV variants (moderncv template, banking style)

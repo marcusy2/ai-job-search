@@ -130,11 +130,11 @@ When the role sits outside your home domain, **lead with the domain-transfer arg
 **Create 2-3 profile statement templates for your main role types:**
 
 <!-- SETUP: These are populated based on your background -->
-**For [YOUR_PRIMARY_ROLE_TYPE] roles:**
-> [YOUR_PROFILE_STATEMENT_TEMPLATE_1]
+**For Aerospace / Mechanical Engineering Intern roles:**
+> Aerospace Engineering student at the University of Illinois Urbana-Champaign (Computer Science minor, James Scholar Honors, GPA 3.57/4) with hands-on experience across the full design-build-test cycle: CAD modeling and CFD analysis in Siemens NX and Ansys Fluent, embedded controls firmware in C++, and hardware fabrication and static-fire testing. Independently designed, built, and tested a two-axis thrust-vector-control rocket, root-causing two static-fire test failures directly from telemetry and video data rather than guesswork. Brings a student rocketry-team background in P&ID system architecture and CFD-driven aerodynamic design to propulsion, structures, or controls work.
 
-**For [YOUR_SECONDARY_ROLE_TYPE] roles:**
-> [YOUR_PROFILE_STATEMENT_TEMPLATE_2]
+**For Manufacturing Engineering Intern roles:**
+> Aerospace Engineering student at the University of Illinois Urbana-Champaign with direct fabrication experience across composite layups, CNC and laser-cut manufacturing, and FDM 3D-printed structural parts, paired with CAD/CFD design skills (Siemens NX, Fusion 360, Ansys Fluent). Tuned print parameters for structurally loaded 3D-printed avionics housings and coordinated structural/aerodynamic fit-checks on a student aircraft build. Comfortable moving between design intent and shop-floor execution.
 
 Statements labeled *[Used for: <company>_<role>]* were extracted from archived application drafts by `/setup` Path A. They are **phrasing references, never fact sources**: when drafting from one, every factual claim still comes from `01-candidate-profile.md` - a past tailored draft does not vouch for its own accuracy.
 

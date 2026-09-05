@@ -60,9 +60,9 @@ How well do the required/preferred skills align with the candidate's capabilitie
 | 40-59 | Partial match, significant upskilling needed |
 | 0-39 | Fundamental mismatch |
 
-**Strong match areas:** [YOUR_PRIMARY_SKILLS]
-**Moderate match areas:** [YOUR_SECONDARY_SKILLS]
-**Weak match areas:** [SKILLS_YOU_LACK]
+**Strong match areas:** Aerospace/mechanical CAD and CFD (Siemens NX, Fusion 360, Ansys Fluent, XFLR5), embedded controls (C++ on Teensy/Arduino, PID control, sensor fusion), manufacturing/fabrication (CNC and laser cutting, composite layups, FDM 3D printing and print-parameter tuning)
+**Moderate match areas:** Python data/simulation work (NumPy/pandas/matplotlib, Monte Carlo methods), PCB/electronics design (KiCad, Eagle PCB), general software (Java, JavaScript)
+**Weak match areas:** No industry manufacturing certifications (e.g. Six Sigma, GD&T certification) yet; no professional/industry work experience yet - all technical experience to date is academic or extracurricular
 
 ### 2. Experience Match (0-100)
 Does work history align with what they're looking for? Match on the function and nature of the work performed, not the literal job title - a "Data Consultant" and a "Data Scientist" role can be functionally identical.
@@ -74,9 +74,9 @@ Does work history align with what they're looking for? Match on the function and
 | 40-59 | Adjacent experience, would need to make the case |
 | 0-39 | Unrelated experience |
 
-**Strong:** [YOUR_DIRECT_EXPERIENCE_DOMAINS]
-**Moderate:** [YOUR_ADJACENT_EXPERIENCE]
-**Entry-level:** [ROLES_WITH_LIMITED_EXPERIENCE]
+**Strong:** Aerospace/mechanical design-build-test project work (rocketry systems, CAD, CFD), hands-on fabrication and manufacturing processes
+**Moderate:** Embedded/controls software, PCB/electronics design, data/telemetry analysis
+**Entry-level:** All of the above - candidate is a rising junior with no prior paid industry internship, so this is the first internship search. Score generously on transferable technical depth (esp. the TVC Rocket project) rather than penalizing for lack of a prior internship title.
 
 ### 3. Behavioral/Culture Fit (0-100)
 Does the role and company culture match the behavioral profile?
@@ -92,8 +92,9 @@ Does the role and company culture match the behavioral profile?
 
 ### 4. Location & Logistics (Pass/Fail + Notes)
 - Within commute range: PASS
-- Remote with occasional office: PASS
-- Requires relocation: FAIL (deal-breaker)
+- Requires relocation: PASS - candidate is explicitly open to relocating anywhere for the right role
+- Remote-only (no in-person component): FAIL (deal-breaker - candidate wants an in-person role/internship)
+- Unpaid / non-compensated position: FAIL (deal-breaker - must be paid)
 - Frequent international travel: FLAG (discuss with user)
 
 ### 5. Career Alignment & Motivation (0-100)
@@ -107,19 +108,19 @@ Does this role advance career goals and contain tasks that energize?
 | 0-39 | Dead end or backwards step |
 
 **Career goals:**
-- [YOUR_CAREER_GOAL_1]
-- [YOUR_CAREER_GOAL_2]
-- [YOUR_CAREER_GOAL_3]
+- Land a paid, in-person Summer 2027 internship in aerospace, mechanical, or manufacturing engineering
+- Build toward a full-time aerospace/mechanical/manufacturing engineering role after graduating May 2028
+- Gain industry experience in propulsion, controls, or manufacturing to complement rocketry-team and independent project work
 
 **Motivation filter:** Evaluate not just whether you *can* do the tasks, but whether the tasks will *energize* you. Consider:
-- Tasks that energize: [YOUR_ENERGIZING_TASKS]
-- Tasks that drain: [YOUR_DRAINING_TASKS]
+- Tasks that energize: Hands-on design-build-test cycles, CAD/CFD work, hardware fabrication, propulsion/controls systems, manufacturing process work
+- Tasks that drain: Not yet established - no signal collected
 - Non-task factors: leadership style, department culture, company values, degree of autonomy
 
 **Life situation alignment:** Consider personal constraints:
-- **Security**: [YOUR_FINANCIAL_SITUATION_CONTEXT]
-- **Flexibility**: [YOUR_SCHEDULE_CONSTRAINTS]
-- **Professional development**: [YOUR_GROWTH_PRIORITIES]
+- **Security**: Full-time student; the internship must be paid
+- **Flexibility**: Available for a full-time Summer 2027 internship; open to relocating anywhere in the US
+- **Professional development**: Building toward an aerospace/mechanical/manufacturing engineering career
 
 ### 6. Salary Benchmark (Optional)
 

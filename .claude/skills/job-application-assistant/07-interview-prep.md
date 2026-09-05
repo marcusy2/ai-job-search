@@ -16,26 +16,33 @@ Keep answers to 1-2 minutes. Be specific. End with what you learned or would do 
 
 <!-- These are populated by /setup from your actual experience. Below are templates showing the format. -->
 
-### 1. [PROJECT_NAME] ([SKILL_DEMONSTRATED])
-**S:** [CONTEXT - what was happening, what was the problem]
-**T:** [YOUR RESPONSIBILITY - what you specifically needed to do]
-**A:** [WHAT YOU DID - specific actions, tools, methods]
-**R:** [OUTCOME - measurable results, adoption, impact]
-**Use for:** "[QUESTION_TYPE_1]", "[QUESTION_TYPE_2]"
+### 1. TVC Rocket - Root-Causing the Axis-Convention Bug (Diagnostic troubleshooting)
+**S:** During the first static-fire test of a solo-built, two-axis thrust-vector-control rocket, the vehicle rotated roughly 80 degrees from vertical and struck the test stand's mechanical stop; from the outside, the gimbal appeared completely inactive.
+**T:** As the sole engineer on the project, needed to determine why the control system failed catastrophically despite passing bench validation before the test.
+**A:** Treated it as a data problem rather than assuming a hardware fault: analyzed the attitude estimate across the burn and found it held stable within 0.12 degrees for 95 seconds before suddenly diverging (ruling out a calibration offset, which would show up from power-on); noticed the estimated roll angle swept nearly the entire mathematical output range on a vehicle that was bolted down and physically motionless; cross-validated with frame-by-frame video tracking that confirmed the airframe was still to within about 0.5 degrees. Traced the divergence to a one-line axis-convention error in the attitude estimator that fed it the wrong reference frame for this build's orientation.
+**R:** Corrected the estimator, added gyro sensor fusion and boot-time bias calibration, and validated the fix on the bench (0.09 degrees standard deviation over 30 seconds) before committing a second motor to a retest.
+**Use for:** "Tell me about a time you debugged a hard technical problem", "Describe a time the data proved your first assumption wrong"
 
-### 2. [PROJECT_NAME] ([SKILL_DEMONSTRATED])
-**S:** [CONTEXT]
-**T:** [YOUR RESPONSIBILITY]
-**A:** [WHAT YOU DID]
-**R:** [OUTCOME]
-**Use for:** "[QUESTION_TYPE_1]", "[QUESTION_TYPE_2]"
+### 2. TVC Rocket - Monte Carlo Analysis Overturning a Design Assumption (Analytical rigor)
+**S:** While designing the same thrust-vector-control rocket, the working assumption was that faster servo actuation was the main lever for control performance.
+**T:** Needed to validate that assumption before committing further engineering time and cost to actuator selection.
+**A:** Built a 6-DOF-informed flight simulation in Python and ran a Monte Carlo sensitivity analysis across hundreds of randomized runs, varying IMU sensor noise, motor burn scatter, and crosswind gusts.
+**R:** Found that control performance was far more sensitive to IMU accelerometer bias than to servo actuation speed - the opposite of the initial intuition - and redirected effort from faster actuators toward sensor calibration before any hardware was built.
+**Use for:** "Tell me about a time analysis changed a design decision", "How do you approach a new engineering problem"
 
-### 3. [PROJECT_NAME] ([SKILL_DEMONSTRATED])
-**S:** [CONTEXT]
-**T:** [YOUR RESPONSIBILITY]
-**A:** [WHAT YOU DID]
-**R:** [OUTCOME]
-**Use for:** "[QUESTION_TYPE_1]", "[QUESTION_TYPE_2]"
+### 3. TVC Rocket - Second Failure, an Inverted Control Sign (Precision under a costly setback)
+**S:** After fixing the first static-fire failure, a second static fire test still diverged immediately at ignition, following a clean 50-second pre-ignition baseline - a new, unrelated failure with no motor left to spare for a blind retry.
+**T:** Diagnose the new failure mode from telemetry alone before deciding on a fix.
+**A:** Analyzed servo command and attitude data and found the inner servo pinned at its travel limit for 70 of the first 71 samples while pitch error grew monotonically instead of correcting - the signature of an inverted control sign (positive feedback). Recognized this was distinct from an earlier check that had already confirmed which way the servo itself moves for a given command, because loop sign depends on how the vehicle responds to the resulting deflection, a different question entirely.
+**R:** Corrected the sign convention and flagged a related actuator-resolution issue for the next design iteration.
+**Use for:** "Tell me about a time you failed and what you learned", "Describe a time you had to be precise under pressure"
+
+### 4. Landing Gear Research Lead, Flight Club Aerospace (Team leadership / cross-functional coordination)
+**S:** As Landing Gear Research Lead on a student flight club aircraft build, the team needed a working two-wing aircraft with aligned structural and aerodynamic components in time for flight testing.
+**T:** Responsible for fabricating wing and control-surface structures and coordinating fit-checks between the structural and aerodynamic sub-teams, plus final landing-gear recommendations.
+**A:** Modeled gussets and ribs in Fusion 360, manufactured wing and control surfaces using a hot-wire cutter and circular saw, applied epoxy and fiberglass layups, and organized logistics for transporting, disassembling, and reassembling two 7-ft wings for flight testing.
+**R:** Delivered landing-gear recommendations backed by structural load and cost analysis and coordinated the wing build/test cycle across teams through to flight testing.
+**Use for:** "Tell me about a time you led a technical team", "Describe managing a hands-on hardware project"
 
 <!-- Add more STAR examples as needed. Aim for 4-6 covering different competencies. -->
 

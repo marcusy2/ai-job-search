@@ -1,8 +1,7 @@
-%% Example CV - [YOUR_NAME]
+%% Example CV - Marcus D. Yang
 %% Comprehensive overview of all competencies, experience, and achievements.
 %% Use as a master reference when tailoring role-specific CVs.
 %%
-%% SETUP: Run /setup to populate this with your actual information.
 %% Compile with: lualatex main_example.tex
 %% (pdflatex often fails on modern MiKTeX with fontawesome5 font-expansion errors.)
 
@@ -33,7 +32,7 @@
     linkcolor=blue,
     filecolor=magenta,
     urlcolor=blue,
-    pdftitle={[YOUR_NAME] - CV},
+    pdftitle={Marcus D. Yang - CV},
     % Keep pdfpagemode=UseNone: this block runs after moderncv's own
     % \AtEndPreamble (moderncv.cls sets pdfpagemode there), so a FullScreen
     % value here would win and open every CV in fullscreen presentation mode.
@@ -43,13 +42,16 @@
 \usepackage{import}
 
 % personal data
-\name{[First]}{[Last]}
+\name{Marcus}{Yang}
 % If you have no address to list, DELETE this whole line. \address{}{}{} fails
 % with "There's no line here to end" on every moderncv version.
-\address{[Your Address, City, Country]}{}{}
-\phone[mobile]{[+XX XXXXXXXXXX]}
-\email{[your.email@example.com]}
-\extrainfo{\href{[https://linkedin.com/in/your-profile]}{LinkedIn}, \href{[https://github.com/your-username]}{GitHub}}
+\address{Champaign, IL, USA}{}{}
+\phone[mobile]{+1 650 954 0288}
+\email{yangdmarcus@gmail.com}
+% GitHub is not yet confirmed (GitHub Classroom repo names suggest "marcusy2" but this
+% has not been verified with the candidate) - add \href{https://github.com/<username>}{GitHub}
+% to \extrainfo below once confirmed.
+\extrainfo{\href{https://www.linkedin.com/in/marcusdyang}{LinkedIn}}
 
 \begin{document}
 
@@ -60,7 +62,7 @@
 % ============================================================
 
 \vspace{6pt}
-\small{[Write a 3-5 line profile statement tailored to the role you're applying for. Focus on what makes you uniquely qualified. Example: "Data scientist with a PhD in [field] and X years of industry experience. Combines deep domain expertise in [domain] with strong applied machine learning and Python development skills. Experienced in developing end-to-end ML pipelines, from data ingestion to stakeholder-facing dashboards."]}
+\small{Aerospace Engineering student at the University of Illinois Urbana-Champaign (Computer Science minor, James Scholar Honors, GPA 3.57/4), in progress, expected May 2028. Hands-on experience across the full design-build-test cycle: CAD modeling and CFD analysis in Siemens NX and Ansys Fluent, embedded controls firmware in C++, and hardware fabrication and static-fire testing. Independently designed, built, and tested a two-axis thrust-vector-control rocket, root-causing two static-fire test failures directly from telemetry and video data. Seeking a paid, in-person internship in aerospace, mechanical, or manufacturing engineering.}
 
 % ============================================================
 %     CORE COMPETENCIES
@@ -70,15 +72,17 @@
 \vspace{1pt}
 \begin{itemize}
 
-\item \textbf{[Skill Category 1]}: [Specific skills, frameworks, tools. Be concrete.]
+\item \textbf{CAD \& CFD}: Siemens NX (incl. NXOpen/Python scripting), Fusion 360, Ansys Fluent, XFLR5, OpenRocket -- full design cycle from geometry to aerodynamic validation
 
-\item \textbf{[Skill Category 2]}: [Specific skills, frameworks, tools.]
+\item \textbf{Embedded Systems \& Controls}: C++ on Teensy/Arduino, closed-loop PID control, IMU sensor fusion, telemetry logging and analysis
 
-\item \textbf{[Skill Category 3]}: [Specific skills, frameworks, tools.]
+\item \textbf{Manufacturing \& Fabrication}: CNC and laser cutting, composite layups (fiberglass/epoxy), FDM 3D printing and print-parameter tuning for structural parts, shop tools (spot welder, belt sander, band saw)
 
-\item \textbf{[Skill Category 4]}: [Domain expertise, methods, approaches.]
+\item \textbf{Programming}: Python (NumPy, pandas, matplotlib, Monte Carlo simulation), C++, Java, JavaScript
 
-\item \textbf{[Skill Category 5]}: [Tools, platforms, software.]
+\item \textbf{Test \& Data Analysis}: Root-cause failure analysis from flight/test telemetry, video, and audio data; signal analysis
+
+\item \textbf{Electronics / PCB}: KiCad, Eagle PCB
 
 \end{itemize}
 
@@ -90,32 +94,46 @@
 \vspace{3pt}
 \begin{itemize}
 
-% --- Most Recent Role ---
-\item{\cventry{[YYYY-Present]}{[Job Title]}{[Company]}{[City, Country]}{}{\vspace{1pt}
+% --- Independent Project ---
+\needspace{5\baselineskip}
+\item{\cventry{2026}{TVC Rocket -- Solo Design, Build \& Test}{Independent Project}{Champaign, IL}{}{\vspace{1pt}
 \begin{itemize}
-    \item {[Achievement or responsibility 1 - be specific, use numbers where possible]}
-    \item {[Achievement or responsibility 2]}
-    \item {[Achievement or responsibility 3]}
-    \item {[Achievement or responsibility 4]}
+    \item {Designed, built, and tested a 4in-diameter model rocket with an active two-axis gimbaled thrust-vector-control system: CAD (Siemens NX), embedded firmware (Teensy 4.1, C++), closed-loop PID control, FDM 3D-printed structures}
+    \item {Built a 6-DOF-informed flight simulation and ran a Monte Carlo sensitivity analysis (hundreds of runs) that found landing performance was far more sensitive to IMU accelerometer bias than servo speed, redirecting engineering effort toward sensor calibration}
+    \item {Root-caused two independent static-fire test failures purely from telemetry: an axis-convention bug in the attitude estimator and an inverted control-sign bug, both diagnosed via statistical analysis of attitude logs and frame-by-frame video/audio tracking}
+    \item {Logged telemetry at 83 Hz with zero dropouts across two static fires (15{,}728 and 12{,}611 samples)}
 \end{itemize}}}
 
 \vspace{3pt}
 
-% --- Previous Role ---
-\item{\cventry{[YYYY-YYYY]}{[Job Title]}{[Company]}{[City, Country]}{}{\vspace{1pt}
+% --- Liquid Rocketry at Illinois ---
+\needspace{5\baselineskip}
+\item{\cventry{2025-Present}{Member}{Liquid Rocketry at Illinois}{Champaign, IL}{}{\vspace{1pt}
 \begin{itemize}
-    \item {[Achievement or responsibility 1]}
-    \item {[Achievement or responsibility 2]}
-    \item {[Achievement or responsibility 3]}
+    \item {Modeled P\&ID system architecture in Siemens NX and integrated components into the pressurant tank assembly}
+    \item {Created CAD geometries for canard-grid fin configurations and ran Ansys Fluent CFD cases to quantify aerodynamic interactions across 0-20 deg deflection}
+    \item {Engineered a KiCad PCB radio transmitter (USB-C + MCU) prototype for ground-test telemetry links}
 \end{itemize}}}
 
 \vspace{3pt}
 
-% --- Earlier Role ---
-\item{\cventry{[YYYY-YYYY]}{[Job Title]}{[Company]}{[City, Country]}{}{\vspace{1pt}
+% --- Flight Club Aerospace ---
+\needspace{5\baselineskip}
+\item{\cventry{2021-2024}{Landing Gear Research Lead}{Flight Club Aerospace}{}{}{\vspace{1pt}
 \begin{itemize}
-    \item {[Achievement or responsibility 1]}
-    \item {[Achievement or responsibility 2]}
+    \item {Manufactured wing and control surfaces (foam ribs, aluminum spars, epoxy/fiberglass layups) and aligned two 7-ft wings for flight testing}
+    \item {Modeled gussets and ribs in Fusion 360; coordinated fit-checks between structural and aerodynamic components}
+    \item {Presented landing-gear recommendations based on structural load and cost analyses}
+\end{itemize}}}
+
+\vspace{3pt}
+
+% --- Asian American Association ---
+\needspace{5\baselineskip}
+\item{\cventry{2024-Present}{Treasurer | Fundraising Officer}{Asian American Association}{Champaign, IL}{}{\vspace{1pt}
+\begin{itemize}
+    \item {Managed membership operations for 200+ members, coordinating records and organizational logistics}
+    \item {Secured partnerships with 15 on-campus sponsors to support events and fundraising initiatives}
 \end{itemize}}}
 
 \end{itemize}
@@ -128,14 +146,9 @@
 \vspace{1pt}
 \begin{itemize}
 
-\item{\cventry{[YYYY-YYYY]}{[Degree] in [Field]}{[Institution]}{[City, Country]}{}{\vspace{1pt}
-Thesis: ``[Thesis Title].'' [Brief description of research focus.]
-}}
-
-\vspace{3pt}
-
-\item{\cventry{[YYYY-YYYY]}{[Degree] in [Field]}{[Institution]}{[City, Country]}{}{\vspace{1pt}
-[Brief description or key topics.]
+\needspace{5\baselineskip}
+\item{\cventry{2024-2028}{B.S. in Aerospace Engineering, Computer Science Minor (James Scholar Honors)}{University of Illinois Urbana-Champaign}{Champaign, IL}{}{\vspace{1pt}
+In progress, expected May 2028. GPA: 3.57/4. Relevant coursework: Incompressible Flow, Aerospace Control Systems, Aerospace Structures, Thermodynamics, Engineering Materials, Statics, Dynamics, Linear Algebra, Electrical and Electronic Circuits.
 }}
 
 \end{itemize}
@@ -147,27 +160,7 @@ Thesis: ``[Thesis Title].'' [Brief description of research focus.]
 \section{Languages}
 \vspace{1pt}
 \begin{itemize}
-\item {[Language 1] (native), [Language 2] (fluent), [Language 3] (intermediate).}
-\end{itemize}
-
-% ============================================================
-%     PUBLICATIONS (optional)
-% ============================================================
-
-\section{Publications}
-\vspace{1pt}
-\begin{itemize}
-\item {[Author(s)] ([Year]). [Title]. [Journal/Conference]. \href{[DOI_URL]}{DOI link}}
-\end{itemize}
-
-% ============================================================
-%     HONORS AND AWARDS (optional)
-% ============================================================
-
-\section{Honors and Awards}
-\vspace{1pt}
-\begin{itemize}
-\item{\textbf{[Award Name]} -- [Event/Organization] ([Year]).}
+\item {English (native).}
 \end{itemize}
 
 % ============================================================
