@@ -26,6 +26,7 @@ This repo is a job application workspace. Claude acts as a career advisor and ap
 - **CV language:** English
 
 - **Status:** Undergraduate student (rising junior), University of Illinois Urbana-Champaign, expected graduation May 2028. Seeking a paid, in-person Summer 2027 internship in aerospace, mechanical, or manufacturing engineering.
+- **Citizenship/Work Authorization:** U.S. Citizen. Clears citizenship/PR and export-control ("U.S. Person") requirements outright.
 - **LinkedIn headline:** "Aerospace Engineering Student @ UIUC | Rocketry, Controls & Manufacturing" *(suggested - edit freely on LinkedIn itself)*
 
 ### Education

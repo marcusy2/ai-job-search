@@ -12,6 +12,7 @@ framework_version: 1.1.1
 - **LinkedIn:** https://www.linkedin.com/in/marcusdyang
 - **GitHub:** https://github.com/mdyang26
 - **Status:** Undergraduate student (rising junior), University of Illinois Urbana-Champaign, expected graduation May 2028. Seeking a paid, in-person Summer 2027 internship in aerospace, mechanical, or manufacturing engineering.
+- **Citizenship/Work Authorization:** U.S. Citizen. Clears citizenship/permanent-residency and export-control ("U.S. Person") requirements outright - no work-authorization or sponsorship concerns for domestic roles.
 - **Constraints:** Full-time student during the academic year; available for a full-time internship in Summer 2027. Relocation is not a constraint.
 
 ### Languages
