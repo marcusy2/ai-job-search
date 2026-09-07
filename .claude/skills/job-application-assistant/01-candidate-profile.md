@@ -10,7 +10,7 @@ framework_version: 1.1.1
 - **Phone:** (650) 954-0288
 - **Email:** yangdmarcus@gmail.com
 - **LinkedIn:** https://www.linkedin.com/in/marcusdyang
-- **GitHub:** [not confirmed - GitHub Classroom repos suggest username "marcusy2"; confirm before adding to CV/cover letters]
+- **GitHub:** https://github.com/mdyang26
 - **Status:** Undergraduate student (rising junior), University of Illinois Urbana-Champaign, expected graduation May 2028. Seeking a paid, in-person Summer 2027 internship in aerospace, mechanical, or manufacturing engineering.
 - **Constraints:** Full-time student during the academic year; available for a full-time internship in Summer 2027. Relocation is not a constraint.
 

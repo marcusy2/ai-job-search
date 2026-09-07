@@ -18,6 +18,7 @@ This repo is a job application workspace. Claude acts as a career advisor and ap
 ### Identity
 - **Name:** Marcus D. Yang
 - **Location:** Champaign, IL, USA (open to relocating anywhere in the US)
+- **GitHub:** https://github.com/mdyang26
 - **Languages:**
   | Language | Level |
   |----------|-------|
