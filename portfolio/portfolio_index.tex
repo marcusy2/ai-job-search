@@ -1,18 +1,23 @@
 %% Portfolio Index - Marcus D. Yang
-%% One-page project summary to attach where an application requires a portfolio
+%% Multi-page project summary to attach where an application requires a portfolio
 %% file (PDF) but the real portfolio is a website. Gives a reviewer something
-%% concrete to look at and drives clicks to the full site.
+%% concrete to look at and drives clicks to the full site. No longer a strict
+%% 1-page document - content is allowed to flow to 2-3 pages naturally.
 %%
-%% Style matches cv/main_spacex_falcon9_intern.tex (one-page-classic).
+%% Style matches cv/main_spacex_falcon9_intern.tex (one-page-classic fonts/rules),
+%% just without the 1-page constraint.
 %% Compile with: lualatex -interaction=nonstopmode portfolio_index.tex
 %%
 %% IMAGES in portfolio/img/ (all present as of this revision):
-%%   tvc.jpg, tvc2.jpg  - TVC Rocket gimbal hardware + wired avionics (from
-%%                        the portfolio site's /projects/tvc-rocket page)
-%%   f101.jpg           - F-101 Voodoo CAD render, side profile (converted
-%%                        from FinalProjectAssemblyRight.tif)
-%% Liquid Rocketry at Illinois has no image slot - it's organizational/team
-%% experience, not a personal project page.
+%%   tvc.jpg, tvc2.jpg, tvc3.jpg, tvc4.jpg
+%%     - TVC Rocket: assembled gimbal hardware, wired avionics (IMU/Teensy),
+%%       3D printer mid-print (nose cone), and motor-loading/field-test prep.
+%%       Pulled from projects-website-psi.vercel.app/projects/tvc-rocket.
+%%   f101.jpg
+%%     - F-101 Voodoo CAD render, side profile (from FinalProjectAssemblyRight.tif)
+%%   liquidrocketry1.jpg, liquidrocketry2.jpg
+%%     - Liquid Rocketry at Illinois: P&ID / pressurant-tank assembly CAD
+%%       screenshots (Siemens NX), user-supplied
 %% Until a named file exists, a labeled placeholder box renders in its place,
 %% so this still compiles cleanly if an image goes missing.
 %%
@@ -22,13 +27,13 @@
 
 \usepackage{fontspec}
 \setmainfont{TeX Gyre Termes}
-\usepackage[top=0.5in, bottom=0.4in, left=0.75in, right=0.5in]{geometry}
+\usepackage[top=0.6in, bottom=0.6in, left=0.75in, right=0.75in]{geometry}
 \usepackage{titlesec}
 \usepackage{enumitem}
 \usepackage{graphicx}
+\usepackage{needspace}
 \usepackage[hidelinks]{hyperref}
 
-\pagestyle{empty}
 \setlength{\parindent}{0pt}
 
 % ---- real portfolio URL ----
@@ -37,59 +42,26 @@
 % ----------------------------
 
 \titleformat{\section}{\raggedright\large\bfseries}{}{0em}{}[\titlerule\vspace{-4pt}]
-\titlespacing*{\section}{0pt}{10pt}{6pt}
-\setlist[itemize]{leftmargin=0.18in, itemsep=0pt, parsep=0pt, topsep=2pt, partopsep=0pt}
+\titlespacing*{\section}{0pt}{12pt}{6pt}
+\setlist[itemize]{leftmargin=0.18in, itemsep=2pt, parsep=0pt, topsep=3pt, partopsep=0pt}
 
-% Single-image project entry: #1 title, #2 tools/date line, #3 image basename, #4 bullets
-\newcommand{\project}[4]{%
-  \begin{minipage}[t]{0.63\linewidth}
-    \vspace{0pt}
-    \textbf{#1}\\[1pt]
-    \textit{\footnotesize #2}
-    \begin{itemize}
-      #4
-    \end{itemize}
-  \end{minipage}\hfill
-  \begin{minipage}[t]{0.34\linewidth}
-    \vspace{0pt}
+% Image box: #1 basename, #2 width (fraction of \linewidth, as a decimal), #3 max height
+\newcommand{\imgbox}[3]{%
+  \begin{minipage}[t]{#2\linewidth}
     \centering
-    \IfFileExists{img/#3.jpg}
-      {\includegraphics[width=\linewidth, height=1.15in, keepaspectratio]{img/#3.jpg}}
-      {\fbox{\parbox[c][1.05in][c]{0.9\linewidth}{\centering\footnotesize\itshape add img/#3.jpg}}}
-  \end{minipage}\\[8pt]
+    \IfFileExists{img/#1.jpg}
+      {\includegraphics[width=\linewidth, height=#3, keepaspectratio]{img/#1.jpg}}
+      {\fbox{\parbox[c][0.9\dimexpr#3\relax][c]{0.85\linewidth}{\centering\footnotesize\itshape add img/#1.jpg}}}
+  \end{minipage}
 }
 
-% Two-image (flagship) project entry: #1 title, #2 tools/date line,
-% #3 first image basename, #4 second image basename, #5 bullets
-\newcommand{\projecttwoimg}[5]{%
-  \begin{minipage}[t]{0.60\linewidth}
-    \vspace{0pt}
-    \textbf{#1}\\[1pt]
-    \textit{\footnotesize #2}
-    \begin{itemize}
-      #5
-    \end{itemize}
-  \end{minipage}\hfill
-  \begin{minipage}[t]{0.37\linewidth}
-    \vspace{0pt}
-    \centering
-    \IfFileExists{img/#3.jpg}
-      {\includegraphics[width=\linewidth, height=0.95in, keepaspectratio]{img/#3.jpg}}
-      {\fbox{\parbox[c][0.9in][c]{0.9\linewidth}{\centering\footnotesize\itshape add img/#3.jpg}}}\\[4pt]
-    \IfFileExists{img/#4.jpg}
-      {\includegraphics[width=\linewidth, height=0.95in, keepaspectratio]{img/#4.jpg}}
-      {\fbox{\parbox[c][0.9in][c]{0.9\linewidth}{\centering\footnotesize\itshape add img/#4.jpg}}}
-  \end{minipage}\\[8pt]
-}
-
-% Full-width, no-image entry: #1 title, #2 role/date line, #3 bullets
-\newcommand{\projectfull}[3]{%
+% Project text block: #1 title, #2 subtitle/date line, #3 bullets
+\newcommand{\projecttext}[3]{%
   \textbf{#1}\\[1pt]
   \textit{\footnotesize #2}
   \begin{itemize}
     #3
   \end{itemize}
-  \vspace{6pt}
 }
 
 \begin{document}
@@ -99,30 +71,68 @@
   Project Portfolio \ $|$ \ \href{\portfoliourl}{\portfoliourldisplay} \ $|$ \ \href{https://github.com/mdyang26}{github.com/mdyang26} \\[2pt]
   {\footnotesize (650) 954-0288 \ $|$ \ \href{mailto:yangdmarcus@gmail.com}{yangdmarcus@gmail.com} \ $|$ \ \href{https://www.linkedin.com/in/marcusdyang}{linkedin.com/in/marcusdyang}}
 \end{center}
-\vspace{-2pt}
+\vspace{2pt}
 
 {\small Aerospace Engineering student at UIUC. Selected hands-on design-build-test projects below; full write-ups, code, and additional work at \href{\portfoliourl}{\portfoliourldisplay}.}
 
 \section{Selected Projects}
 
-\projecttwoimg{TVC Rocket -- Solo Design, Build \& Test}{Siemens NX, C++ (Teensy 4.1), Python, FDM 3D printing \ $\cdot$ \ Summer 2026}{tvc}{tvc2}{
+% ============================================================
+%     TVC ROCKET (flagship - 4 photos)
+% ============================================================
+\projecttext{TVC Rocket -- Solo Design, Build \& Test}{Siemens NX, C++ (Teensy 4.1), Python, FDM 3D printing \ $\cdot$ \ Summer 2026}{
   \item Two-axis gimbaled thrust-vector-control rocket, built end to end solo: CAD, embedded PID firmware, 3D-printed structures, static-fire testing.
   \item Monte Carlo sensitivity analysis (hundreds of runs) identified IMU accelerometer bias, not servo speed, as the dominant attitude-error driver.
   \item Root-caused two static-fire failures purely from telemetry, video, and audio data: an estimator axis-convention bug and an inverted control sign.
 }
+\vspace{4pt}
 
-\project{F-101 Voodoo -- CAD Reconstruction}{Siemens NX \ $\cdot$ \ Spring 2025}{f101}{
+\noindent
+\imgbox{tvc3}{0.235}{1.7in}\hfill
+\imgbox{tvc2}{0.235}{1.7in}\hfill
+\imgbox{tvc}{0.235}{1.7in}\hfill
+\imgbox{tvc4}{0.235}{1.7in}
+
+\vspace{2pt}
+{\footnotesize\itshape Left to right: printing the nose cone, wired avionics (IMU + Teensy 4.1), assembled gimbal, loading the motor for a static-fire test.}
+
+\vspace{16pt}
+
+% ============================================================
+%     F-101 VOODOO
+% ============================================================
+\needspace{7\baselineskip}
+\projecttext{F-101 Voodoo -- CAD Reconstruction}{Siemens NX \ $\cdot$ \ Spring 2025}{
   \item Rebuilt a full McDonnell F-101 Voodoo from multi-view engineering drawings, scaling dimensions to reconstruct fuselage, wing, and tail geometry.
   \item Integrated articulated control surfaces (ailerons, elevators, rudder) with parametric assemblies and constraints.
 }
+\vspace{4pt}
 
-\project{Liquid Rocketry at Illinois -- Member}{Siemens NX, Ansys Fluent, KiCad \ $\cdot$ \ Spring 2025 -- Present}{liquidrocketry}{
+\begin{center}
+  \imgbox{f101}{0.6}{2.2in}
+\end{center}
+
+\vspace{16pt}
+
+% ============================================================
+%     LIQUID ROCKETRY AT ILLINOIS
+% ============================================================
+\needspace{8\baselineskip}
+\projecttext{Liquid Rocketry at Illinois -- Member}{Siemens NX, Ansys Fluent, KiCad \ $\cdot$ \ Spring 2025 -- Present}{
   \item Modeled P\&ID system architecture in Siemens NX and integrated components into the pressurant tank assembly.
   \item Created CAD geometries for canard-grid fin configurations and ran Ansys Fluent CFD cases across a 0-20 degree deflection range.
   \item Engineered a KiCad PCB radio transmitter (USB-C + MCU) prototype for ground-test telemetry links.
 }
+\vspace{4pt}
 
-\vfill
+\noindent
+\imgbox{liquidrocketry1}{0.47}{2.6in}\hfill
+\imgbox{liquidrocketry2}{0.47}{2.6in}
+
+\vspace{2pt}
+{\footnotesize\itshape Pressurant tank / P\&ID assembly modeled in Siemens NX.}
+
+\vspace{20pt}
 \begin{center}
   {\small Full portfolio: \ \href{\portfoliourl}{\textbf{\portfoliourldisplay}}}
 \end{center}
