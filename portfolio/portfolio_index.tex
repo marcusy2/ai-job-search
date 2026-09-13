@@ -80,11 +80,23 @@
 % ============================================================
 %     TVC ROCKET (flagship - 4 photos)
 % ============================================================
-\projecttext{TVC Rocket -- Solo Design, Build \& Test}{Siemens NX, C++ (Teensy 4.1), Python, FDM 3D printing \ $\cdot$ \ Summer 2026}{
-  \item Two-axis gimbaled thrust-vector-control rocket, built end to end solo: CAD, embedded PID firmware, 3D-printed structures, static-fire testing.
-  \item Monte Carlo sensitivity analysis (hundreds of runs) identified IMU accelerometer bias, not servo speed, as the dominant attitude-error driver.
-  \item Root-caused two static-fire failures purely from telemetry, video, and audio data: an estimator axis-convention bug and an inverted control sign.
-}
+\textbf{TVC Rocket -- Solo Design, Build \& Test}\\[1pt]
+\textit{\footnotesize Siemens NX, C++ (Teensy 4.1), Python, FDM 3D printing \ $\cdot$ \ Summer 2026}
+
+\vspace{4pt}
+Originally scoped as a hobbyist-scale propulsive vertical-landing rocket (two solid motors stacked in series, with the flight computer computing landing-burn ignition altitude dynamically at apogee since fixed-thrust motors can't be throttled), the project was descoped mid-build to a two-axis, thrust-vector-controlled ascent with parachute recovery to keep the timeline realistic while preserving the core problem: closing a real-time attitude control loop around a motor that cannot be throttled.
+
+\begin{itemize}
+  \item \textbf{Simulation before hardware:} built a 6-DOF-informed flight simulation and ran a Monte Carlo sensitivity analysis across hundreds of runs (randomized IMU noise, motor burn scatter, crosswind gusts). Result: attitude performance was far more sensitive to IMU accelerometer bias than to servo actuation speed -- the opposite of the initial intuition -- which redirected effort from faster actuators to sensor calibration before any hardware was cut.
+  \item \textbf{Hardware:} a 4-inch-diameter airframe (servo size set the minimum diameter), a two-axis gimbal with a 2.3$\times$ servo-to-gimbal linkage ratio and $\pm$10\textdegree{} of range, a Teensy 4.1 avionics bay (IMU, buck converters, perfboard) reinforced with threaded rods for stiffness, a 3D-printed nose cone that splits into three parts on servo command when the accelerometer detects negative acceleration, and a custom two-axis test stand sized for the motor's peak thrust.
+  \item \textbf{Firmware:} a PID attitude-control loop running on a complementary-filtered IMU estimate ($\alpha=0.98$), boot-time gyro bias calibration, a piecewise-linear thrust lookup built from the motor's 27-point NAR certification curve, gain scheduling on thrust fraction, a deployment-inhibit flag for ground testing, and onboard SD telemetry logging at 83 Hz during burn.
+  \item \textbf{Static Fire 1:} the vehicle rotated roughly 80\textdegree{} and struck the test stand's mechanical stop; from outside, the gimbal looked completely inactive. Root-caused entirely from data: a one-line axis-convention bug in the attitude estimator (it assumed the wrong vertical axis for this build's orientation), which saturated the control loop on the very first sample even though the vehicle was standing still -- confirmed by an attitude estimate that held to 0.12\textdegree{} for 95 seconds before diverging, and by frame-by-frame video showing the airframe never moved. Fixed the estimator, added sensor fusion and boot calibration, and re-validated on the bench (0.09\textdegree{} standard deviation over 30 seconds) before spending another motor.
+  \item \textbf{Static Fire 2:} a clean 50-second pre-ignition baseline, then immediate, monotonic divergence at ignition. Root cause: both control signs were inverted (positive feedback) -- every correction the controller commanded enlarged the error instead of shrinking it. The insight: an earlier bench check had confirmed which way each \emph{servo} moves for a given command, but not which way the \emph{vehicle} rotates in response to the resulting nozzle deflection -- a different question, and passing the first check does not imply passing the second.
+  \item \textbf{Also ruled out:} accelerometer dead-reckoning as a parachute-deployment trigger, after both tests showed roughly $-53$ m/s of apparent velocity accumulating on a bolted-down, motionless vehicle -- a false trigger that would fire the parachute at burnout in real flight. A barometric altimeter is the identified fix.
+  \item \textbf{Post-test analysis:} processed both telemetry logs (15{,}728 and 12{,}611 samples) in Python, verified zero dropouts and monotonic timestamps, and derived a vibration-onset metric validated against ignition timing extracted independently from the test video's audio track.
+\end{itemize}
+
+\textit{\footnotesize Status: two static-fire tests completed, both root-caused from data; no flight yet. Claude was used as a coding/analysis assistant for simulation implementation and plotting; all engineering judgment, hardware design, firmware, and failure-analysis conclusions were the candidate's own (disclosed on the portfolio page).}
 \vspace{4pt}
 
 \noindent
@@ -101,11 +113,17 @@
 % ============================================================
 %     F-101 VOODOO
 % ============================================================
-\needspace{7\baselineskip}
-\projecttext{F-101 Voodoo -- CAD Reconstruction}{Siemens NX \ $\cdot$ \ Spring 2025}{
-  \item Rebuilt a full McDonnell F-101 Voodoo from multi-view engineering drawings, scaling dimensions to reconstruct fuselage, wing, and tail geometry.
-  \item Integrated articulated control surfaces (ailerons, elevators, rudder) with parametric assemblies and constraints.
-}
+\needspace{9\baselineskip}
+\textbf{F-101 Voodoo -- CAD Reconstruction}\\[1pt]
+\textit{\footnotesize Siemens NX \ $\cdot$ \ Spring 2025 \ $\cdot$ \ \textasciitilde70 hours}
+
+\vspace{4pt}
+Reconstructed from open-source three-view engineering drawings (front, side, top) that became publicly available after the F-101 Voodoo's retirement from service. Established scale from known reference dimensions (wingspan and fuselage length), then derived every other measurement directly from the scaled drawings.
+
+\begin{itemize}
+  \item \textbf{Hardest part -- wing curvature:} a single-view profile isn't enough to reconstruct a true 3D airfoil shape, so points were plotted from all three drawing angles and cross-referenced to converge on the actual curvature, rather than approximating it from one view.
+  \item \textbf{Scope:} the ailerons are a functional, parametrically constrained assembly; the rest of the airframe geometry is complete and dimensionally accurate to the source drawings.
+\end{itemize}
 \vspace{4pt}
 
 \begin{center}
@@ -117,12 +135,19 @@
 % ============================================================
 %     LIQUID ROCKETRY AT ILLINOIS
 % ============================================================
-\needspace{8\baselineskip}
-\projecttext{Liquid Rocketry at Illinois -- Member}{Siemens NX, Ansys Fluent, KiCad \ $\cdot$ \ Spring 2025 -- Present}{
-  \item Modeled P\&ID system architecture in Siemens NX and integrated components into the pressurant tank assembly.
-  \item Created CAD geometries for canard-grid fin configurations and ran Ansys Fluent CFD cases across a 0-20 degree deflection range.
-  \item Engineered a KiCad PCB radio transmitter (USB-C + MCU) prototype for ground-test telemetry links.
-}
+\needspace{10\baselineskip}
+\textbf{Liquid Rocketry at Illinois -- Member}\\[1pt]
+\textit{\footnotesize Siemens NX, Ansys Fluent, KiCad \ $\cdot$ \ Spring 2025 -- Present}
+
+\vspace{4pt}
+Modeled the P\&ID system architecture and pressurant tank assembly for the team's liquid rocket in Siemens NX, then used NX's mechanical routing tools to connect the injector to the IPA tank, LOX tank, and GN2 (gaseous nitrogen) lines.
+
+\begin{itemize}
+  \item \textbf{Design for manufacturing vs. plumbing correctness:} the hardest part was designing plumbing that would function correctly while still being practical to actually fabricate and assemble. Connection joints needed enough clearance that assembly wouldn't turn into a fight, and in several places the fit was tight because the actuator housings were larger than the available envelope -- mounting them took real trial-and-error iteration, not a first-pass fit.
+  \item \textbf{Sourcing commercial components:} selected fittings and hardware from McMaster-Carr and Brennan Industries that met both budget and functional requirements. Learned NPT and ORB fitting standards along the way, and used different connector/adapter types specifically to save space where clearance was tight.
+  \item \textbf{Aerodynamics:} created CAD geometries for canard-grid fin configurations and ran Ansys Fluent CFD cases across a 0-20 degree deflection range.
+  \item \textbf{Avionics:} engineered a KiCad PCB radio transmitter (USB-C + MCU) prototype for ground-test telemetry links.
+\end{itemize}
 \vspace{4pt}
 
 \noindent

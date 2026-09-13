@@ -1,173 +1,132 @@
-%% Example CV - Marcus D. Yang
-%% Comprehensive overview of all competencies, experience, and achievements.
-%% Use as a master reference when tailoring role-specific CVs.
-%%
-%% Compile with: lualatex main_example.tex
-%% (pdflatex often fails on modern MiKTeX with fontawesome5 font-expansion errors.)
+%% ===========================================================================
+%% MASTER CV - Marcus D. Yang
+%% ---------------------------------------------------------------------------
+%% This file is the FROZEN FORMATTING STANDARD and the FACT SOURCE for every
+%% tailored CV. Two rules:
+%%   1. The preamble below (geometry, font, \section rule, \erow macro, list
+%%      spacing) is frozen. A tailored CV COPIES it verbatim - never retune it.
+%%   2. Everything between \begin{document} and \end{document} is CONTENT and
+%%      is fully re-orderable / re-groupable per the job description. See
+%%      .claude/skills/job-application-assistant/05-cv-templates.md.
+%% Compile: lualatex -interaction=nonstopmode main_example.tex   (MUST be 1 page)
+%% Visual reference: cv/Marcus Yang Master Resume.pdf
+%% ===========================================================================
+\documentclass[11pt,letterpaper]{article}
 
-\documentclass[11pt,a4paper,sans]{moderncv}
-\moderncvstyle{banking}
-\moderncvcolor{blue}
+% --- Fonts: Times New Roman clone, bundled with every modern TeX dist -------
+\usepackage{fontspec}
+\setmainfont{TeX Gyre Termes}
+\usepackage{microtype}
+\linespread{0.93}   % match the master's tight (Word "single") leading
 
-% Force the name and section headings to render in moderncv blue (color1).
-% Default banking leaves them black: moderncvstylebanking.sty's \colorlet
-% copies (not aliases) the pre-scheme accent colour, so the name colours are
-% frozen before \moderncvcolor runs. Re-let them after. \namefont is the hook
-% every name-style macro routes through, so this also works on moderncv 2.3.1
-% (Debian/Ubuntu apt), which has no \firstnamestyle/\lastnamestyle at all.
-\renewcommand*{\namefont}{\fontsize{34}{36}\bfseries\upshape}
-\colorlet{firstnamecolor}{color1}
-\colorlet{lastnamecolor}{color1}
-\colorlet{namecolor}{color1}
-\renewcommand*{\sectionstyle}[1]{{\sectionfont\color{color1}#1}}
+% --- Page geometry (master: 0.8in sides, ~0.5in top) ----------------------
+\usepackage[top=0.5in,bottom=0.5in,left=0.8in,right=0.8in]{geometry}
 
-\usepackage[utf8]{inputenc}
-% moderncv loads hyperref itself in an \AtEndPreamble hook, so \hypersetup
-% must go in an \AtEndPreamble of our own: on moderncv < 2.4 a top-level
-% \usepackage{hyperref} clashes with the class's own
-% \RequirePackage[unicode]{hyperref}. From 2.4.0 the class passes its options
-% through \PassOptionsToPackage instead, which is what removes that clash.
-\AtEndPreamble{\hypersetup{
-    colorlinks=true,
-    linkcolor=blue,
-    filecolor=magenta,
-    urlcolor=blue,
-    pdftitle={Marcus D. Yang - CV},
-    % Keep pdfpagemode=UseNone: this block runs after moderncv's own
-    % \AtEndPreamble (moderncv.cls sets pdfpagemode there), so a FullScreen
-    % value here would win and open every CV in fullscreen presentation mode.
-    pdfpagemode=UseNone,
-}}
-\usepackage[scale=0.80]{geometry}
-\usepackage{import}
+% --- Section headings: bold, full-width rule underneath --------------------
+\usepackage{titlesec}
+\titleformat{\section}{\fontsize{12.5}{14}\selectfont\bfseries}{}{0pt}{}[{\vspace{1pt}\hrule height 0.6pt}]
+\titlespacing*{\section}{0pt}{6pt}{2pt}
 
-% personal data
-\name{Marcus}{Yang}
-% If you have no address to list, DELETE this whole line. \address{}{}{} fails
-% with "There's no line here to end" on every moderncv version.
-\address{Champaign, IL, USA}{}{}
-\phone[mobile]{+1 650 954 0288}
-\email{yangdmarcus@gmail.com}
-\extrainfo{\href{https://www.linkedin.com/in/marcusdyang}{LinkedIn}, \href{https://github.com/mdyang26}{GitHub}}
+% --- Tight bullet lists ---------------------------------------------------
+\usepackage{enumitem}
+\setlist[itemize]{leftmargin=1.35em,itemsep=1pt,topsep=1pt,parsep=0pt,
+                  partopsep=0pt,label=\textbullet}
+
+\usepackage[hidelinks]{hyperref}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+
+% --- \erow{left}{right}: entry/degree row, left flush-left, right flush-right
+%     Caller supplies ALL markup in {left} (\textbf{...}, \textit{...}, etc.).
+\newlength{\erowdate}\setlength{\erowdate}{2.0in}
+\newcommand{\erow}[2]{%
+  \noindent\makebox[\dimexpr\linewidth-\erowdate\relax][l]{#1}%
+  \makebox[\erowdate][r]{#2}\par}
+
+% --- \entrygap: vertical space between entries within a section -----------
+\newcommand{\entrygap}{\vspace{2pt}}
 
 \begin{document}
 
-\makecvtitle
+% ===========================================================================
+%  HEADER
+% ===========================================================================
+\begin{center}
+  {\fontsize{17}{20}\selectfont\bfseries Marcus D. Yang}\\[2pt]
+  {\footnotesize (650) 954-0288 \textbar{} \href{mailto:yangdmarcus@gmail.com}{yangdmarcus@gmail.com} \textbar{} \href{https://www.linkedin.com/in/marcusdyang}{www.linkedin.com/in/marcusdyang} \textbar{} \href{https://projects-website-psi.vercel.app/}{https://projects-website-psi.vercel.app/}}
+\end{center}
 
-% ============================================================
-%     PROFILE STATEMENT
-% ============================================================
-
-\vspace{6pt}
-\small{Aerospace Engineering student at the University of Illinois Urbana-Champaign (Computer Science minor, James Scholar Honors, GPA 3.57/4), in progress, expected May 2028. Hands-on experience across the full design-build-test cycle: CAD modeling and CFD analysis in Siemens NX and Ansys Fluent, embedded controls firmware in C++, and hardware fabrication and static-fire testing. Independently designed, built, and tested a two-axis thrust-vector-control rocket, root-causing two static-fire test failures directly from telemetry and video data. Seeking a paid, in-person internship in aerospace, mechanical, or manufacturing engineering.}
-
-% ============================================================
-%     CORE COMPETENCIES
-% ============================================================
-
-\section{Core Competencies}
-\vspace{1pt}
-\begin{itemize}
-
-\item \textbf{CAD \& CFD}: Siemens NX (incl. NXOpen/Python scripting), Fusion 360, Ansys Fluent, XFLR5, OpenRocket -- full design cycle from geometry to aerodynamic validation
-
-\item \textbf{Embedded Systems \& Controls}: C++ on Teensy/Arduino, closed-loop PID control, IMU sensor fusion, telemetry logging and analysis
-
-\item \textbf{Manufacturing \& Fabrication}: CNC and laser cutting, composite layups (fiberglass/epoxy), FDM 3D printing and print-parameter tuning for structural parts, shop tools (spot welder, belt sander, band saw)
-
-\item \textbf{Programming}: Python (NumPy, pandas, matplotlib, Monte Carlo simulation), C++, Java, JavaScript
-
-\item \textbf{Test \& Data Analysis}: Root-cause failure analysis from flight/test telemetry, video, and audio data; signal analysis
-
-\item \textbf{Electronics / PCB}: KiCad, Eagle PCB
-
-\end{itemize}
-
-% ============================================================
-%     PROFESSIONAL EXPERIENCE
-% ============================================================
-
-\section{Professional Experience}
-\vspace{3pt}
-\begin{itemize}
-
-% --- Independent Project ---
-\needspace{5\baselineskip}
-\item{\cventry{2026}{TVC Rocket -- Solo Design, Build \& Test}{Independent Project}{Champaign, IL}{}{\vspace{1pt}
-\begin{itemize}
-    \item {Designed, built, and tested a 4in-diameter model rocket with an active two-axis gimbaled thrust-vector-control system: CAD (Siemens NX), embedded firmware (Teensy 4.1, C++), closed-loop PID control, FDM 3D-printed structures}
-    \item {Built a 6-DOF-informed flight simulation and ran a Monte Carlo sensitivity analysis (hundreds of runs) that found landing performance was far more sensitive to IMU accelerometer bias than servo speed, redirecting engineering effort toward sensor calibration}
-    \item {Root-caused two independent static-fire test failures purely from telemetry: an axis-convention bug in the attitude estimator and an inverted control-sign bug, both diagnosed via statistical analysis of attitude logs and frame-by-frame video/audio tracking}
-    \item {Logged telemetry at 83 Hz with zero dropouts across two static fires (15{,}728 and 12{,}611 samples)}
-\end{itemize}}}
-
-\vspace{3pt}
-
-% --- Liquid Rocketry at Illinois ---
-\needspace{5\baselineskip}
-\item{\cventry{2025-Present}{Member}{Liquid Rocketry at Illinois}{Champaign, IL}{}{\vspace{1pt}
-\begin{itemize}
-    \item {Modeled P\&ID system architecture in Siemens NX and integrated components into the pressurant tank assembly}
-    \item {Created CAD geometries for canard-grid fin configurations and ran Ansys Fluent CFD cases to quantify aerodynamic interactions across 0-20 deg deflection}
-    \item {Engineered a KiCad PCB radio transmitter (USB-C + MCU) prototype for ground-test telemetry links}
-\end{itemize}}}
-
-\vspace{3pt}
-
-% --- Flight Club Aerospace ---
-\needspace{5\baselineskip}
-\item{\cventry{2021-2024}{Landing Gear Research Lead}{Flight Club Aerospace}{}{}{\vspace{1pt}
-\begin{itemize}
-    \item {Manufactured wing and control surfaces (foam ribs, aluminum spars, epoxy/fiberglass layups) and aligned two 7-ft wings for flight testing}
-    \item {Modeled gussets and ribs in Fusion 360; coordinated fit-checks between structural and aerodynamic components}
-    \item {Presented landing-gear recommendations based on structural load and cost analyses}
-\end{itemize}}}
-
-\vspace{3pt}
-
-% --- Asian American Association ---
-\needspace{5\baselineskip}
-\item{\cventry{2024-Present}{Treasurer | Fundraising Officer}{Asian American Association}{Champaign, IL}{}{\vspace{1pt}
-\begin{itemize}
-    \item {Managed membership operations for 200+ members, coordinating records and organizational logistics}
-    \item {Secured partnerships with 15 on-campus sponsors to support events and fundraising initiatives}
-\end{itemize}}}
-
-\end{itemize}
-
-% ============================================================
-%     EDUCATION
-% ============================================================
-
+% ===========================================================================
+%  EDUCATION
+% ===========================================================================
 \section{Education}
-\vspace{1pt}
+\erow{\textbf{University of Illinois Urbana-Champaign} \textbar{} Champaign, IL}{August 2024 - May 2028}
+\erow{\textit{B.S. in Aerospace Engineering with a Computer Science minor, James Scholar Honors}}{GPA: 3.57/4}
+\textbf{Relevant Coursework:} Incompressible Flow, Aerospace Control Systems, Aerospace Structures, Thermodynamics, Engineering Materials, Linear Algebra, Electrical and Electronic Circuits, Intro to Computer Science II
+
+% ===========================================================================
+%  ORGANIZATIONAL AND TECHNICAL EXPERIENCE
+% ===========================================================================
+\section{Organizational and Technical Experience}
+
+\erow{\textbf{TVC Rocket} (3d Printing, Python)}{Summer 2026}
 \begin{itemize}
+  \item Designed and fabricated a 2-axis thrust-vector-control gimbal, avionics bay, and recovery system by integrating a Teensy 4.1 flight computer, IMU, and servo actuators into a commercial rocket body.
+  \item Simulated rocket descent dynamics in Python by sweeping sensor noise, motor burn variance, and wind disturbance across hundreds of Monte Carlo trials to validate a real-time landing-burn control law.
+  \item Traced a servo-linkage resolution bottleneck in the TVC gimbal by characterizing the mechanical actuation ratio, then redesigned the control path to reach sub-degree pointing precision.
+  \item Diagnosed two static-fire test failures on a thrust-vector-control gimbal by analyzing telemetry logs and frame-by-frame video, isolating a mis-referenced attitude axis and inverted control-loop signs.
+\end{itemize}
+\entrygap
 
-\needspace{5\baselineskip}
-\item{\cventry{2024-2028}{B.S. in Aerospace Engineering, Computer Science Minor (James Scholar Honors)}{University of Illinois Urbana-Champaign}{Champaign, IL}{}{\vspace{1pt}
-In progress, expected May 2028. GPA: 3.57/4. Relevant coursework: Incompressible Flow, Aerospace Control Systems, Aerospace Structures, Thermodynamics, Engineering Materials, Statics, Dynamics, Linear Algebra, Electrical and Electronic Circuits.
-}}
+\erow{\textbf{Liquid Rocketry at Illinois}}{Spring 2025 - Present}
+\begin{itemize}
+  \item Modeled P\&ID system architecture in Siemens NX and installed components into the pressurant tank assembly by sourcing, importing, and constraining CAD hardware to satisfy spatial constraints.
+  \item Created CAD geometries for canard-grid fin configurations and ran ANSYS Fluent CFD cases to quantify aerodynamic interactions across 0--20° deflection.
+  \item Assessed pressurant tank options, produced mechanical integration models (CAD) and verified fit against vehicle structural constraints and P\&ID.
+\end{itemize}
+\entrygap
 
+\erow{\textbf{CAD Project} (Siemens NX)}{Spring 2025}
+\begin{itemize}
+  \item Recreated a full McDonnell F-101 Voodoo in Siemens NX by extracting and scaling geometric dimensions from multi-view engineering drawings to accurately reconstruct fuselage, wing, and tail geometry.
+  \item Incorporated articulated ailerons using parametric assemblies and constraints to render realistic aircraft deflection.
+\end{itemize}
+\entrygap
+
+\erow{\textbf{Glider Project}}{Fall 2024}
+\begin{itemize}
+  \item Built and tested gliders to optimize aerodynamic performance, achieving 101 ft glide distance and 3.9 s flight time, ranking 6th in class.
+  \item Performed iterative flight testing and analysis of glide path, mass distribution, and wing geometry to maximize lift-to-drag performance and flight endurance.
 \end{itemize}
 
-% ============================================================
-%     LANGUAGES
-% ============================================================
+% ===========================================================================
+%  TECHNICAL SKILLS
+% ===========================================================================
+\section{Technical Skills}
+\textbf{Computer Languages:} Python, C++, Java, JavaScript\\
+\textbf{Software:} Siemens NX, Fusion 360, Eagle PCB, KiCad, OpenRocket, XFLR5, Ansys Fluent, Excel\\
+\textbf{Shop Tools:} Bambu A1 Mini, Spot Welder, Belt Sander, Laser Cutter, CNC Plasma Cutter, Table Saw, Drill Press\\
+\textbf{Materials:} Epoxy Resin, Fiberglass, Sheet Metal, Aluminum Pipes, Plywood, PETG, PLA
 
-\section{Languages}
-\vspace{1pt}
+% ===========================================================================
+%  LEADERSHIP AND ACTIVITIES
+% ===========================================================================
+\section{Leadership and Activities}
+
+\erow{\textbf{Asian American Association}}{Fall 2024 - Present}
+Treasurer \textbar{} Fundraising Officer
 \begin{itemize}
-\item {English (native).}
+  \item Managed membership operations for 300+ members, coordinating records and organizational logistics.
+  \item Secured partnerships with 15 on-campus sponsors to support events and fundraising initiatives.
 \end{itemize}
+\entrygap
 
-% ============================================================
-%     REFERENCES
-% ============================================================
-
-\section{References}
-\vspace{1pt}
+\erow{\textbf{Flight Club Aerospace}}{Summer 2021 - Spring 2024}
+Landing Gear Research Lead \textbar{} CAD \textbar{} Fabrication
 \begin{itemize}
-\item{Available upon request.}
+  \item Manufactured wing and control surfaces: cut foam ribs, trimmed aluminum spars with a circular saw, and applied epoxy \& fiberglass layups to shape aerodynamic skins; aligned two 7-ft wings for flight testing.
+  \item Drafted gussets and ribs in Fusion 360 and confirmed fit-checks between structural and aerodynamic components.
+  \item Oversaw logistics for wing transport/disassembly/reassembly and assembled and presented landing-gear recommendations based on structural load and cost analyses.
 \end{itemize}
 
 \end{document}
