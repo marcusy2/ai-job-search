@@ -86,10 +86,41 @@
 \vspace{4pt}
 Originally scoped as a hobbyist-scale propulsive vertical-landing rocket (two solid motors stacked in series, with the flight computer computing landing-burn ignition altitude dynamically at apogee since fixed-thrust motors can't be throttled), the project was descoped mid-build to a two-axis, thrust-vector-controlled ascent with parachute recovery to keep the timeline realistic while preserving the core problem: closing a real-time attitude control loop around a motor that cannot be throttled.
 
+\vspace{6pt}
+\begin{center}
+  \imgbox{tvc4}{0.55}{2.1in}
+\end{center}
+\vspace{2pt}
+{\footnotesize\itshape The assembled rocket, mounted in the test stand, being loaded for a static-fire test.}
+\vspace{10pt}
+
 \begin{itemize}
   \item \textbf{Simulation before hardware:} built a 6-DOF-informed flight simulation and ran a Monte Carlo sensitivity analysis across hundreds of runs (randomized IMU noise, motor burn scatter, crosswind gusts). Result: attitude performance was far more sensitive to IMU accelerometer bias than to servo actuation speed -- the opposite of the initial intuition -- which redirected effort from faster actuators to sensor calibration before any hardware was cut.
   \item \textbf{Hardware:} a 4-inch-diameter airframe (servo size set the minimum diameter), a two-axis gimbal with a 2.3$\times$ servo-to-gimbal linkage ratio and $\pm$10\textdegree{} of range, a Teensy 4.1 avionics bay (IMU, buck converters, perfboard) reinforced with threaded rods for stiffness, a 3D-printed nose cone that splits into three parts on servo command when the accelerometer detects negative acceleration, and a custom two-axis test stand sized for the motor's peak thrust.
+\end{itemize}
+
+\vspace{2pt}
+\noindent
+\imgbox{tvc3}{0.47}{1.9in}\hfill
+\imgbox{tvc}{0.47}{1.9in}
+
+\vspace{2pt}
+{\footnotesize\itshape Printing the nose cone (left); the assembled two-axis gimbal (right).}
+\vspace{10pt}
+
+\begin{itemize}
   \item \textbf{Firmware:} a PID attitude-control loop running on a complementary-filtered IMU estimate ($\alpha=0.98$), boot-time gyro bias calibration, a piecewise-linear thrust lookup built from the motor's 27-point NAR certification curve, gain scheduling on thrust fraction, a deployment-inhibit flag for ground testing, and onboard SD telemetry logging at 83 Hz during burn.
+\end{itemize}
+
+\vspace{2pt}
+\begin{center}
+  \imgbox{tvc2}{0.5}{1.9in}
+\end{center}
+\vspace{2pt}
+{\footnotesize\itshape Wired avionics bay: IMU and Teensy 4.1 on breadboard before final integration.}
+\vspace{10pt}
+
+\begin{itemize}
   \item \textbf{Static Fire 1:} the vehicle rotated roughly 80\textdegree{} and struck the test stand's mechanical stop; from outside, the gimbal looked completely inactive. Root-caused entirely from data: a one-line axis-convention bug in the attitude estimator (it assumed the wrong vertical axis for this build's orientation), which saturated the control loop on the very first sample even though the vehicle was standing still -- confirmed by an attitude estimate that held to 0.12\textdegree{} for 95 seconds before diverging, and by frame-by-frame video showing the airframe never moved. Fixed the estimator, added sensor fusion and boot calibration, and re-validated on the bench (0.09\textdegree{} standard deviation over 30 seconds) before spending another motor.
   \item \textbf{Static Fire 2:} a clean 50-second pre-ignition baseline, then immediate, monotonic divergence at ignition. Root cause: both control signs were inverted (positive feedback) -- every correction the controller commanded enlarged the error instead of shrinking it. The insight: an earlier bench check had confirmed which way each \emph{servo} moves for a given command, but not which way the \emph{vehicle} rotates in response to the resulting nozzle deflection -- a different question, and passing the first check does not imply passing the second.
   \item \textbf{Also ruled out:} accelerometer dead-reckoning as a parachute-deployment trigger, after both tests showed roughly $-53$ m/s of apparent velocity accumulating on a bolted-down, motionless vehicle -- a false trigger that would fire the parachute at burnout in real flight. A barometric altimeter is the identified fix.
@@ -97,16 +128,6 @@ Originally scoped as a hobbyist-scale propulsive vertical-landing rocket (two so
 \end{itemize}
 
 \textit{\footnotesize Status: two static-fire tests completed, both root-caused from data; no flight yet. Claude was used as a coding/analysis assistant for simulation implementation and plotting; all engineering judgment, hardware design, firmware, and failure-analysis conclusions were the candidate's own (disclosed on the portfolio page).}
-\vspace{4pt}
-
-\noindent
-\imgbox{tvc3}{0.235}{1.7in}\hfill
-\imgbox{tvc2}{0.235}{1.7in}\hfill
-\imgbox{tvc}{0.235}{1.7in}\hfill
-\imgbox{tvc4}{0.235}{1.7in}
-
-\vspace{2pt}
-{\footnotesize\itshape Left to right: printing the nose cone, wired avionics (IMU + Teensy 4.1), assembled gimbal, loading the motor for a static-fire test.}
 
 \vspace{16pt}
 
