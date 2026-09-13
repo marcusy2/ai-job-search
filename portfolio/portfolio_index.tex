@@ -6,12 +6,17 @@
 %% Style matches cv/main_spacex_falcon9_intern.tex (one-page-classic).
 %% Compile with: lualatex -interaction=nonstopmode portfolio_index.tex
 %%
-%% IMAGES: drop JP/PNG files into portfolio/img/ named exactly:
-%%   tvc.jpg  f101.jpg  modelrocket.jpg  glider.jpg
-%% Until a file exists, a labeled placeholder box renders in its place, so
-%% this compiles cleanly with zero images present.
+%% IMAGES in portfolio/img/ (all present as of this revision):
+%%   tvc.jpg, tvc2.jpg  - TVC Rocket gimbal hardware + wired avionics (from
+%%                        the portfolio site's /projects/tvc-rocket page)
+%%   f101.jpg           - F-101 Voodoo CAD render, side profile (converted
+%%                        from FinalProjectAssemblyRight.tif)
+%% Liquid Rocketry at Illinois has no image slot - it's organizational/team
+%% experience, not a personal project page.
+%% Until a named file exists, a labeled placeholder box renders in its place,
+%% so this still compiles cleanly if an image goes missing.
 %%
-%% PORTFOLIO URL: replace the \portfoliourl definition below with the real URL.
+%% PORTFOLIO URL: \portfoliourl below.
 
 \documentclass[11pt,letterpaper]{article}
 
@@ -35,7 +40,7 @@
 \titlespacing*{\section}{0pt}{10pt}{6pt}
 \setlist[itemize]{leftmargin=0.18in, itemsep=0pt, parsep=0pt, topsep=2pt, partopsep=0pt}
 
-% Project entry: #1 title, #2 tools/date line, #3 image basename, #4 bullets
+% Single-image project entry: #1 title, #2 tools/date line, #3 image basename, #4 bullets
 \newcommand{\project}[4]{%
   \begin{minipage}[t]{0.63\linewidth}
     \vspace{0pt}
@@ -54,6 +59,39 @@
   \end{minipage}\\[8pt]
 }
 
+% Two-image (flagship) project entry: #1 title, #2 tools/date line,
+% #3 first image basename, #4 second image basename, #5 bullets
+\newcommand{\projecttwoimg}[5]{%
+  \begin{minipage}[t]{0.60\linewidth}
+    \vspace{0pt}
+    \textbf{#1}\\[1pt]
+    \textit{\footnotesize #2}
+    \begin{itemize}
+      #5
+    \end{itemize}
+  \end{minipage}\hfill
+  \begin{minipage}[t]{0.37\linewidth}
+    \vspace{0pt}
+    \centering
+    \IfFileExists{img/#3.jpg}
+      {\includegraphics[width=\linewidth, height=0.95in, keepaspectratio]{img/#3.jpg}}
+      {\fbox{\parbox[c][0.9in][c]{0.9\linewidth}{\centering\footnotesize\itshape add img/#3.jpg}}}\\[4pt]
+    \IfFileExists{img/#4.jpg}
+      {\includegraphics[width=\linewidth, height=0.95in, keepaspectratio]{img/#4.jpg}}
+      {\fbox{\parbox[c][0.9in][c]{0.9\linewidth}{\centering\footnotesize\itshape add img/#4.jpg}}}
+  \end{minipage}\\[8pt]
+}
+
+% Full-width, no-image entry: #1 title, #2 role/date line, #3 bullets
+\newcommand{\projectfull}[3]{%
+  \textbf{#1}\\[1pt]
+  \textit{\footnotesize #2}
+  \begin{itemize}
+    #3
+  \end{itemize}
+  \vspace{6pt}
+}
+
 \begin{document}
 
 \begin{center}
@@ -67,7 +105,7 @@
 
 \section{Selected Projects}
 
-\project{TVC Rocket -- Solo Design, Build \& Test}{Siemens NX, C++ (Teensy 4.1), Python, FDM 3D printing \ $\cdot$ \ Summer 2026}{tvc}{
+\projecttwoimg{TVC Rocket -- Solo Design, Build \& Test}{Siemens NX, C++ (Teensy 4.1), Python, FDM 3D printing \ $\cdot$ \ Summer 2026}{tvc}{tvc2}{
   \item Two-axis gimbaled thrust-vector-control rocket, built end to end solo: CAD, embedded PID firmware, 3D-printed structures, static-fire testing.
   \item Monte Carlo sensitivity analysis (hundreds of runs) identified IMU accelerometer bias, not servo speed, as the dominant attitude-error driver.
   \item Root-caused two static-fire failures purely from telemetry, video, and audio data: an estimator axis-convention bug and an inverted control sign.
@@ -78,14 +116,10 @@
   \item Integrated articulated control surfaces (ailerons, elevators, rudder) with parametric assemblies and constraints.
 }
 
-\project{Model Rocket -- Design \& Flight Validation}{Siemens NX, OpenRocket, Excel \ $\cdot$ \ Fall 2024}{modelrocket}{
-  \item Designed custom fin geometry and fabricated a prototype to hit a target apogee.
-  \item Flight reached 430 ft apogee with 25 ft downrange drift; trajectory validated against OpenRocket simulation.
-}
-
-\project{Glider -- Iterative Aerodynamic Optimization}{Fabrication, flight testing \ $\cdot$ \ Fall 2024}{glider}{
-  \item Fabricated and iteratively tested gliders, tuning glide path, mass distribution, and wing geometry.
-  \item Achieved 101 ft glide distance and 3.9 s flight time, ranking 6th in class.
+\projectfull{Liquid Rocketry at Illinois -- Member}{Siemens NX, Ansys Fluent, KiCad \ $\cdot$ \ Spring 2025 -- Present}{
+  \item Modeled P\&ID system architecture in Siemens NX and integrated components into the pressurant tank assembly.
+  \item Created CAD geometries for canard-grid fin configurations and ran Ansys Fluent CFD cases across a 0-20 degree deflection range.
+  \item Engineered a KiCad PCB radio transmitter (USB-C + MCU) prototype for ground-test telemetry links.
 }
 
 \vfill
