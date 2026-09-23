@@ -1,0 +1,49 @@
+Marcus D. Yang
+(650) 954-0288 | yangdmarcus@gmail.com | www.linkedin.com/in/marcusdyang | https://projects-website-psi.vercel.app/
+Education
+University of Illinois Urbana-Champaign | Champaign, IL August 2024 - May 2028
+B.S. in Aerospace Engineering with a Computer Science minor, James Scholar Honors GPA: 3.57/4
+Relevant Coursework: Engineering Materials, Aerospace Structures, Statics, Dynamics, Electrical and Electronic
+Circuits, Thermodynamics, Aerospace Control Systems, Incompressible Flow, Linear Algebra, Discrete Structures
+Organizational and Technical Experience
+TVC Rocket (Embedded Firmware, 3D Printing) Summer 2026
+• Integrated a Teensy 4.1 flight computer, MPU-6050 IMU, and servo actuators into an electro-mechanical 2-axis
+TVC gimbal, avionics bay, and recovery system.
+• Designed engine mount and structural parts in Siemens NX (NXOpen/Python) for FDM additive manufacturing.
+• Performed root cause analysis on two static fire test failures from telemetry and video, isolating a misreferenced
+attitude axis and an inverted control loop sign.
+• Logged telemetry at 83 Hz with zero dropouts across two static fires (15,728 and 12,611 samples).
+• Traced a servo linkage resolution bottleneck by characterizing the mechanical actuation ratio, then redesigned
+the control path to reach sub-degree pointing precision.
+• Ran a Monte Carlo sensitivity analysis across hundreds of trials (IMU noise, motor burn scatter, crosswind),
+finding landing performance was more sensitive to accelerometer bias than servo speed and redirecting effort
+toward sensor calibration.
+• Wrote closed loop PID control firmware in C++ on the Teensy 4.1, fusing IMU data to steer the gimbal.
+• Bench tested the PID control loop against a live IMU feed to confirm gimbal response before static fire.
+Liquid Rocketry at Illinois (Siemens NX, KiCad) Spring 2025 - Present
+• Modeled P&ID system architecture in Siemens NX and integrated components into the pressurant tank assembly.
+• Assessed pressurant tank options and produced mechanical integration models, verifying fit against vehicle
+structural and P&ID constraints.
+• Created CAD geometries for canard-grid fins and ran Ansys Fluent CFD cases across 0–20° deflection.
+• Engineered a KiCad PCB radio transmitter (USB-C + MCU) prototype enabling ground-test telemetry links.
+CAD Project (Siemens NX) Spring 2025
+• Reconstructed an F-101 Voodoo’s fuselage, wing, and tail in Siemens NX from multi-view technical drawings.
+• Integrated articulated control surfaces (ailerons, elevators, rudder) using parametric assemblies and constraints.
+Technical Skills
+CAD & Engineering Software: Siemens NX, Fusion 360, Ansys Fluent, Excel
+Shop Tools: Spot Welder, Belt Sander, Laser Cutter, CNC Plasma Cutter, Table Saw, Drill Press
+Materials: Epoxy Resin, Fiberglass, Sheet Metal, Aluminum Pipes, Plywood, PETG, PLA
+Electronics: KiCad, Eagle PCB
+Computer Languages: Python, C++, Java, JavaScript
+Leadership and Activities
+Flight Club Aerospace Summer 2021 - Spring 2024
+Landing Gear Research Lead | CAD | Fabrication
+• Manufactured wing and control surfaces: cut foam ribs, trimmed aluminum spars with a circular saw, and applied
+epoxy & fiberglass layups to shape aerodynamic skins; aligned two 7-ft wings for flight testing.
+• Drafted gussets and ribs in Fusion 360 and confirmed fit-checks between structural and aerodynamic components.
+• Oversaw logistics for wing transport/disassembly/reassembly and assembled and presented landing-gear recom-
+mendations based on structural load and cost analyses.
+Asian American Association Fall 2024 - Present
+Treasurer | Fundraising Officer
+• Managed membership operations for 300+ members, coordinating records and organizational logistics.
+• Secured partnerships with 15 on-campus sponsors to support events and fundraising initiatives.
