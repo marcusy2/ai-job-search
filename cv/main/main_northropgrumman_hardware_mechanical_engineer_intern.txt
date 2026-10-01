@@ -1,0 +1,51 @@
+                                                Marcus D. Yang
+       (650) 954-0288 | yangdmarcus@gmail.com | www.linkedin.com/in/marcusdyang | https://projects-website-psi.vercel.app/
+
+Education
+University of Illinois Urbana-Champaign | Champaign, IL                           August 2024 - May 2028
+B.S. in Aerospace Engineering with a Computer Science minor, James Scholar Honors              GPA: 3.57/4
+Relevant Coursework: Aerospace Structures, Engineering Materials, Thermodynamics, Electrical and Electronic
+Circuits, Aerospace Control Systems, Incompressible Flow, Statics, Dynamics
+Organizational and Technical Experience
+TVC Rocket (Siemens NX, Additive Manufacturing, C++)                                                     Summer 2026
+ • Designed a 2-axis TVC gimbal, avionics bay, and recovery system in Siemens NX and fabricated the structures
+   by FDM additive manufacturing in PETG and PLA.
+ • Packaged a Teensy 4.1 flight computer, IMU sensor, and servo actuators into the 3D-printed avionics bay and
+   integrated them into a commercial rocket body.
+ • Traced a servo linkage resolution bottleneck in the TVC gimbal by characterizing the mechanical actuation ratio,
+   then redesigned the control path to reach sub-degree pointing precision.
+ • Engineered a closed-loop PID flight-control system in C++ on a Teensy 4.1 microcontroller, fusing IMU data to
+   steer the TVC gimbal in real time.
+ • Bench tested the PID control system against a live IMU feed to confirm gimbal response before static fire.
+ • Diagnosed two static fire test failures on the TVC gimbal by analyzing telemetry logs and frame-by-frame video,
+   isolating a misreferenced attitude axis and inverted control loop signs.
+Liquid Rocketry at Illinois                                                                    Spring 2025 - Present
+ • Modeled P&ID system architecture in Siemens NX and installed components into the pressurant tank assembly
+   by sourcing, importing, and constraining CAD hardware to satisfy spatial constraints.
+ • Assessed pressurant tank options, produced mechanical integration models (CAD) and verified fit against vehicle
+   structural constraints and P&ID.
+ • Engineered a KiCad PCB radio transmitter (USB-C + MCU) prototype enabling ground-test telemetry links.
+ • Created CAD geometries for canard-grid fin configurations and ran ANSYS Fluent CFD cases to quantify
+   aerodynamic interactions across 0–20° deflection.
+CAD Project (Siemens NX)                                                                                   Spring 2025
+ • Recreated a full McDonnell F-101 Voodoo in Siemens NX by extracting and scaling geometric dimensions from
+   multi-view engineering drawings to accurately reconstruct fuselage, wing, and tail geometry.
+ • Incorporated articulated ailerons using parametric assemblies and constraints to render realistic aircraft deflection.
+Technical Skills
+Computer Languages: Python, C++, Java, JavaScript
+Software: Siemens NX, Fusion 360, Eagle PCB, KiCad, OpenRocket, XFLR5, Ansys Fluent, Excel
+Shop Tools: Bambu A1 Mini, Spot Welder, Belt Sander, Laser Cutter, CNC Plasma Cutter, Table Saw, Drill Press
+Materials: Epoxy Resin, Fiberglass, Sheet Metal, Aluminum Pipes, Plywood, PETG, PLA
+Leadership and Activities
+Asian American Association                                                                      Fall 2024 - Present
+Treasurer | Fundraising Officer
+ • Managed membership operations for 300+ members, coordinating records and organizational logistics.
+ • Secured partnerships with 15 on-campus sponsors to support events and fundraising initiatives.
+Flight Club Aerospace                                                                  Summer 2021 - Spring 2024
+Landing Gear Research Lead | CAD | Fabrication
+ • Manufactured wing and control surfaces: cut foam ribs, trimmed aluminum spars with a circular saw, and applied
+   epoxy & fiberglass layups to shape aerodynamic skins; aligned two 7-ft wings for flight testing.
+ • Drafted gussets and ribs in Fusion 360 and confirmed fit-checks between structural and aerodynamic components.
+ • Oversaw logistics for wing transport/disassembly/reassembly and assembled and presented landing-gear recom-
+   mendations based on structural load and cost analyses.
+

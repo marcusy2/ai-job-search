@@ -1,0 +1,52 @@
+                                                Marcus D. Yang
+       (650) 954-0288 | yangdmarcus@gmail.com | www.linkedin.com/in/marcusdyang | https://projects-website-psi.vercel.app/
+
+Education
+University of Illinois Urbana-Champaign | Champaign, IL                                 August 2024 - May 2028
+B.S. in Aerospace Engineering with a Computer Science minor, James Scholar Honors                  GPA: 3.57/4
+Relevant Coursework: Aerospace Control Systems, Dynamics, Linear Algebra, Incompressible Flow, Thermody-
+namics, Electrical and Electronic Circuits, Aerospace Structures, Intro to Computer Science II
+Organizational and Technical Experience
+TVC Rocket (C++, Embedded Systems, Python)                                                         Summer 2026
+ • Implemented a closed-loop PID attitude control loop in C++ on a Teensy 4.1, fusing IMU data with a comple-
+   mentary filter to steer a 2-axis TVC gimbal in real time.
+ • Built a Python 6-DOF flight simulation and ran Monte Carlo sweeps of IMU noise, motor burn variance, and
+   crosswind across hundreds of trials to validate a landing-burn control law.
+ • Found from the sweep data that landing performance was far more sensitive to IMU accelerometer bias than
+   servo speed, redirecting effort toward sensor calibration.
+ • Ran hardware-in-the-loop bench tests of the PID firmware against a live IMU feed, confirming correct gimbal
+   servo response in real time before static fire.
+ • Root-caused two static fire failures from telemetry and video: an atan2 axis-convention bug corrupting the
+   attitude estimate and an inverted control sign.
+ • Traced a servo linkage resolution bottleneck in the TVC gimbal by characterizing the mechanical actuation ratio,
+   then redesigned the control path to reach sub-degree pointing precision.
+ • Logged onboard telemetry at 83 Hz with zero dropouts across two test campaigns (15,728 and 12,611 samples).
+Liquid Rocketry at Illinois                                                                Spring 2025 - Present
+ • Created CAD geometries for canard-grid fin configurations and ran ANSYS Fluent CFD cases to quantify
+   aerodynamic interactions across 0–20° deflection.
+ • Engineered a KiCad PCB radio transmitter (USB-C + MCU) prototype enabling ground-test telemetry links.
+ • Modeled P&ID system architecture in Siemens NX and integrated components into the pressurant tank assembly,
+   sourcing and constraining CAD hardware to spatial requirements.
+ • Assessed pressurant tank options, produced mechanical integration models (CAD) and verified fit against vehicle
+   structural constraints and P&ID.
+Model Rocket Project (Siemens NX, OpenRocket)                                                           Fall 2024
+ • Designed custom fin geometry in Siemens NX and fabricated a physical prototype to hit a target apogee.
+ • Validated performance against OpenRocket simulations; flight reached 430 ft apogee with 25 ft downrange drift.
+Technical Skills
+Computer Languages: Python, C++, Java, JavaScript
+Software: Siemens NX, Fusion 360, Eagle PCB, KiCad, OpenRocket, XFLR5, Ansys Fluent, Excel
+Shop Tools: Bambu A1 Mini, Spot Welder, Belt Sander, Laser Cutter, CNC Plasma Cutter, Table Saw, Drill Press
+Materials: Epoxy Resin, Fiberglass, Sheet Metal, Aluminum Pipes, Plywood, PETG, PLA
+Leadership and Activities
+Asian American Association                                                                      Fall 2024 - Present
+Treasurer | Fundraising Officer
+ • Managed membership operations for 300+ members, coordinating records and organizational logistics.
+ • Secured partnerships with 15 on-campus sponsors to support events and fundraising initiatives.
+Flight Club Aerospace                                                                  Summer 2021 - Spring 2024
+Landing Gear Research Lead | CAD | Fabrication
+ • Manufactured wing and control surfaces: cut foam ribs, trimmed aluminum spars with a circular saw, and applied
+   epoxy & fiberglass layups to shape aerodynamic skins; aligned two 7-ft wings for flight testing.
+ • Drafted gussets and ribs in Fusion 360 and confirmed fit-checks between structural and aerodynamic components.
+ • Oversaw logistics for wing transport/disassembly/reassembly and assembled and presented landing-gear recom-
+   mendations based on structural load and cost analyses.
+

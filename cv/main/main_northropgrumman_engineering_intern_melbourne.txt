@@ -1,0 +1,51 @@
+                                                Marcus D. Yang
+       (650) 954-0288 | yangdmarcus@gmail.com | www.linkedin.com/in/marcusdyang | https://projects-website-psi.vercel.app/
+
+Education
+University of Illinois Urbana-Champaign | Champaign, IL                               August 2024 - May 2028
+B.S. in Aerospace Engineering with a Computer Science minor, James Scholar Honors                  GPA: 3.57/4
+Relevant Coursework: Electrical and Electronic Circuits, Engineering Materials, Aerospace Structures, Aerospace
+Control Systems, Thermodynamics, Incompressible Flow, Statics, Dynamics
+Organizational and Technical Experience
+TVC Rocket (3d Printing, C++, Python)                                                                    Summer 2026
+ • Designed and fabricated a 2-axis TVC gimbal, avionics bay, and recovery system by integrating a Teensy 4.1
+   flight computer, IMU, and servo actuators into a commercial rocket body.
+ • Bench tested the PID control system against a live IMU feed to confirm gimbal response before static fire.
+ • Traced a servo linkage resolution bottleneck in the TVC gimbal by characterizing the mechanical actuation ratio,
+   then redesigned the control path to reach sub-degree pointing precision.
+ • Diagnosed two static fire test failures on the TVC gimbal by analyzing telemetry logs and frame-by-frame video,
+   isolating a misreferenced attitude axis and inverted control loop signs.
+ • Logged onboard telemetry at 83 Hz with zero dropouts across two test campaigns (15,728 and 12,611 samples).
+Liquid Rocketry at Illinois                                                                    Spring 2025 - Present
+ • Modeled P&ID system architecture in Siemens NX and installed components into the pressurant tank assembly
+   by sourcing, importing, and constraining CAD hardware to satisfy spatial constraints.
+ • Engineered a KiCad PCB radio transmitter (USB-C + MCU) prototype enabling ground-test telemetry links.
+ • Assessed pressurant tank options, produced mechanical integration models (CAD) and verified fit against vehicle
+   structural constraints and P&ID.
+CAD Project (Siemens NX)                                                                                   Spring 2025
+ • Recreated a full McDonnell F-101 Voodoo in Siemens NX by extracting and scaling geometric dimensions from
+   multi-view engineering drawings to accurately reconstruct fuselage, wing, and tail geometry.
+ • Incorporated articulated ailerons using parametric assemblies and constraints to render realistic aircraft deflection.
+Glider Project                                                                                             Spring 2026
+ • Built and tested gliders to optimize aerodynamic performance, achieving 101 ft glide distance and 3.9 s flight
+   time, ranking 6th in class.
+ • Performed iterative flight testing and analysis of glide path, mass distribution, and wing geometry to maximize
+   lift-to-drag performance and flight endurance.
+Technical Skills
+Computer Languages: Python, C++, Java, JavaScript
+Software: Siemens NX, Fusion 360, Eagle PCB, KiCad, OpenRocket, XFLR5, Ansys Fluent, Excel
+Shop Tools: Bambu A1 Mini, Spot Welder, Belt Sander, Laser Cutter, CNC Plasma Cutter, Table Saw, Drill Press
+Materials: Epoxy Resin, Fiberglass, Sheet Metal, Aluminum Pipes, Plywood, PETG, PLA
+Leadership and Activities
+Asian American Association                                                                      Fall 2024 - Present
+Treasurer | Fundraising Officer
+ • Managed membership operations for 300+ members, coordinating records and organizational logistics.
+ • Secured partnerships with 15 on-campus sponsors to support events and fundraising initiatives.
+Flight Club Aerospace                                                                  Summer 2021 - Spring 2024
+Landing Gear Research Lead | CAD | Fabrication
+ • Manufactured wing and control surfaces: cut foam ribs, trimmed aluminum spars with a circular saw, and applied
+   epoxy & fiberglass layups to shape aerodynamic skins; aligned two 7-ft wings for flight testing.
+ • Drafted gussets and ribs in Fusion 360 and confirmed fit-checks between structural and aerodynamic components.
+ • Oversaw logistics for wing transport/disassembly/reassembly and assembled and presented landing-gear recom-
+   mendations based on structural load and cost analyses.
+
