@@ -109,7 +109,8 @@ CVS = {
    fc_first=False),
 }
 
-only = sys.argv[1:]
+# Only these two cleared the fit bar (2026-10-03); the other configs are kept for reference.
+only = sys.argv[1:] or ["main_amca_mechanical_engineering_intern", "main_apex_propulsion_intern"]
 for name, cfg in CVS.items():
     if only and name not in only:
         continue
