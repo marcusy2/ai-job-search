@@ -46,7 +46,8 @@ LRI_PID_IPA = r"Modeled the P\&ID system architecture of the team's IPA/LOX liqu
 LRI_SRC     = r"Modeled P\&ID system architecture in Siemens NX and integrated components into the pressurant tank assembly, sourcing and constraining CAD hardware to spatial requirements."
 LRI_TANK    = r"Assessed pressurant tank options, produced mechanical integration models (CAD) and verified fit against vehicle structural constraints and P\&ID."
 LRI_CFD     = r"Created CAD geometries for canard-grid fins and ran Ansys Fluent CFD cases across 0--20\textdegree{} deflection."
-LRI_PCB     = r"Engineered a KiCad PCB radio transmitter (USB-C + MCU) prototype enabling ground-test telemetry links."
+LRI_TRADE   = r"Ran a trade study on pressurant tank options and produced mechanical integration models, verifying fit against vehicle structural and P\&ID constraints."
+LRI_PCB     =r"Engineered a KiCad PCB radio transmitter (USB-C + MCU) prototype enabling ground-test telemetry links."
 
 F101_1 = r"Recreated a full McDonnell F-101 Voodoo in Siemens NX by extracting and scaling geometric dimensions from multi-view engineering drawings to reconstruct fuselage, wing, and tail geometry."
 F101_2 = r"Integrated articulated control surfaces (ailerons, elevators, rudder) using parametric assemblies and constraints."
@@ -107,6 +108,35 @@ CVS = {
             (r"\textbf{Liquid Rocketry at Illinois} (KiCad, Siemens NX)", S25P, [LRI_PCB, LRI_PID, LRI_TANK, LRI_CFD]),
             (MR, F24, [MR_1, MR_2])],
    fc_first=False),
+ # ---- batch 2 (Varda, Astranis, Southwest) ----
+ "main_varda_vehicle_integration_test_intern": dict(
+   coursework=["Aerospace Structures", "Thermodynamics", "Incompressible Flow", "Electrical and Electronic Circuits", "Aerospace Control Systems", "Statics", "Dynamics", "Engineering Materials", "Linear Algebra"],
+   entries=[(r"\textbf{TVC Rocket} (Integration, Test, Python)", S26, [TVC_BUILD, TVC_NX, TVC_BENCH, TVC_RCA, TVC_TLM, TVC_FW, TVC_MC_FIND, TVC_LINK]),
+            (r"\textbf{Liquid Rocketry at Illinois} (Siemens NX, Fluid Systems)", S25P, [LRI_PID, LRI_TANK, LRI_PCB, LRI_CFD]),
+            (r"\textbf{CAD Project} (Siemens NX)", S25, [F101_1, F101_2])]),
+ "main_varda_propulsion_engineering_intern": dict(
+   coursework=["Thermodynamics", "Incompressible Flow", "Aerospace Structures", "Engineering Materials", "Statics", "Dynamics", "Aerospace Control Systems", "Electrical and Electronic Circuits"],
+   entries=[(r"\textbf{Liquid Rocketry at Illinois} (Fluid Systems, Siemens NX)", S25P, [LRI_PID_IPA, LRI_TANK, LRI_CFD, LRI_PCB]),
+            (r"\textbf{TVC Rocket} (Static Fire Testing, Python)", S26, [TVC_SF, TVC_NX, TVC_RCA, TVC_TLM, TVC_BENCH, TVC_MC, TVC_LINK]),
+            (MR, F24, [MR_1, MR_2]),
+            (GL, S26b, [GL_1, GL_2])]),
+ "main_varda_manufacturing_engineering_intern": dict(
+   coursework=["Statics", "Dynamics", "Incompressible Flow", "Thermodynamics", "Engineering Materials", "Aerospace Structures", "Aerospace Control Systems", "Electrical and Electronic Circuits"],
+   entries=[(r"\textbf{TVC Rocket} (Fabrication, 3D Printing)", S26, [TVC_BUILD, TVC_NX, TVC_LINK, TVC_RCA, TVC_FW, TVC_BENCH, TVC_MC_FIND, TVC_TLM]),
+            (r"\textbf{Liquid Rocketry at Illinois} (Siemens NX, Assembly Integration)", S25P, [LRI_SRC, LRI_TANK, LRI_PCB, LRI_CFD]),
+            (r"\textbf{Investment Research Automation Platform} (Python, SQL)", "Ongoing", [INV_1, INV_2, INV_3])]),
+ "main_southwest_aircraft_engineering_intern": dict(
+   coursework=["Aerospace Structures", "Incompressible Flow", "Thermodynamics", "Engineering Materials", "Statics", "Dynamics", "Aerospace Control Systems", "Electrical and Electronic Circuits"],
+   entries=[(TVC, S26, [TVC_BUILD, TVC_RCA, TVC_LINK, TVC_NX, TVC_MC_FIND, TVC_TLM]),
+            (LRI, S25P, [LRI_SRC, LRI_TANK, LRI_CFD, LRI_PCB]),
+            (r"\textbf{CAD Project} (Siemens NX)", S25, [F101_1, F101_2]),
+            (GL, S26b, [GL_1, GL_2])]),
+ "main_astranis_propulsion_test_intern": dict(
+   coursework=["Thermodynamics", "Incompressible Flow", "Aerospace Structures", "Engineering Materials", "Statics", "Dynamics", "Aerospace Control Systems", "Electrical and Electronic Circuits"],
+   entries=[(r"\textbf{TVC Rocket} (Design, Build, Test)", S26, [TVC_SF, TVC_BENCH, TVC_RCA, TVC_TLM, TVC_NX, TVC_MC, TVC_LINK]),
+            (r"\textbf{Liquid Rocketry at Illinois} (Fluid Systems, Siemens NX)", S25P, [LRI_PID_IPA, LRI_TRADE, LRI_CFD, LRI_PCB]),
+            (MR, F24, [MR_1, MR_2]),
+            (GL, S26b, [GL_1, GL_2])]),
 }
 
 # Only these two cleared the fit bar (2026-10-03); the other configs are kept for reference.

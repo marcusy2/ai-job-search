@@ -1,0 +1,121 @@
+%% ===========================================================================
+%% MASTER CV - Marcus D. Yang
+%% ---------------------------------------------------------------------------
+%% This file is the FROZEN FORMATTING STANDARD and the FACT SOURCE for every
+%% tailored CV. Two rules:
+%%   1. The preamble below (geometry, font, \section rule, \erow macro, list
+%%      spacing) is frozen. A tailored CV COPIES it verbatim - never retune it.
+%%   2. Everything between \begin{document} and \end{document} is CONTENT and
+%%      is fully re-orderable / re-groupable per the job description. See
+%%      .claude/skills/job-application-assistant/05-cv-templates.md.
+%% Compile: lualatex -interaction=nonstopmode main_example.tex   (MUST be 1 page)
+%% Visual reference: cv/Marcus Yang Master Resume.pdf
+%% ===========================================================================
+\documentclass[11pt,letterpaper]{article}
+
+% --- Fonts: Times New Roman clone, bundled with every modern TeX dist -------
+\usepackage{fontspec}
+\setmainfont{TeX Gyre Termes}
+\usepackage{microtype}
+\linespread{0.93}   % match the master's tight (Word "single") leading
+
+% --- Page geometry (master: 0.8in sides, ~0.5in top) ----------------------
+\usepackage[top=0.5in,bottom=0.5in,left=0.8in,right=0.8in]{geometry}
+
+% --- Section headings: bold, full-width rule underneath --------------------
+\usepackage{titlesec}
+\titleformat{\section}{\fontsize{12.5}{14}\selectfont\bfseries}{}{0pt}{}[{\vspace{1pt}\hrule height 0.6pt}]
+\titlespacing*{\section}{0pt}{6pt}{2pt}
+
+% --- Tight bullet lists ---------------------------------------------------
+\usepackage{enumitem}
+\setlist[itemize]{leftmargin=1.35em,itemsep=1pt,topsep=1pt,parsep=0pt,
+                  partopsep=0pt,label=\textbullet}
+
+\usepackage[hidelinks]{hyperref}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+
+% --- \erow{left}{right}: entry/degree row, left flush-left, right flush-right
+%     Caller supplies ALL markup in {left} (\textbf{...}, \textit{...}, etc.).
+\newlength{\erowdate}\setlength{\erowdate}{2.0in}
+\newcommand{\erow}[2]{%
+  \noindent\makebox[\dimexpr\linewidth-\erowdate\relax][l]{#1}%
+  \makebox[\erowdate][r]{#2}\par}
+
+% --- \entrygap: vertical space between entries within a section -----------
+\newcommand{\entrygap}{\vspace{2pt}}
+
+\begin{document}
+
+% ===========================================================================
+%  HEADER
+% ===========================================================================
+\begin{center}
+  {\fontsize{17}{20}\selectfont\bfseries Marcus D. Yang}\\[2pt]
+  {\footnotesize (650) 954-0288 \textbar{} \href{mailto:yangdmarcus@gmail.com}{yangdmarcus@gmail.com} \textbar{} \href{https://www.linkedin.com/in/marcusdyang}{www.linkedin.com/in/marcusdyang} \textbar{} \href{https://projects-website-psi.vercel.app/}{https://projects-website-psi.vercel.app/}}
+\end{center}
+
+% ===========================================================================
+%  EDUCATION
+% ===========================================================================
+\section{Education}
+\erow{\textbf{University of Illinois Urbana-Champaign} \textbar{} Champaign, IL}{August 2024 - May 2028}
+\erow{\textit{B.S. in Aerospace Engineering with a Computer Science minor, James Scholar Honors}}{GPA: 3.57/4}
+\textbf{Relevant Coursework:} Aerospace Structures, Thermodynamics, Incompressible Flow, Electrical and Electronic Circuits, Aerospace Control Systems, Statics, Dynamics, Engineering Materials, Linear Algebra
+
+\section{Organizational and Technical Experience}
+
+\erow{\textbf{TVC Rocket} (Integration, Test, Python)}{Summer 2026}
+\begin{itemize}
+  \item Designed and fabricated a 2-axis TVC gimbal, avionics bay, and recovery system by integrating a Teensy 4.1 flight computer, IMU, and servo actuators into a commercial rocket body.
+  \item Designed engine mount and structural parts in Siemens NX (NXOpen/Python) and 3D printed them in PETG/PLA.
+  \item Bench tested closed loop PID control against a live IMU feed to confirm gimbal response before static fire.
+  \item Performed root cause analysis on two static fire test failures from telemetry logs and frame-by-frame video, isolating a misreferenced attitude axis and an inverted control loop sign.
+  \item Logged telemetry at 83 Hz with zero dropouts across two static fires (15,728 and 12,611 samples).
+  \item Wrote C++ flight firmware on the Teensy 4.1, fusing MPU-6050 IMU data with a complementary filter to drive a closed-loop PID gimbal controller.
+  \item Ran a Python Monte Carlo sensitivity analysis across hundreds of trials, finding landing performance was more sensitive to accelerometer bias than servo speed and redirecting effort toward sensor calibration.
+  \item Traced a servo linkage resolution bottleneck in the TVC gimbal by characterizing the mechanical actuation ratio, then redesigned the control path to reach sub-degree pointing precision.
+\end{itemize}
+\entrygap
+
+\erow{\textbf{Liquid Rocketry at Illinois} (Siemens NX, Fluid Systems)}{Spring 2025 - Present}
+\begin{itemize}
+  \item Modeled P\&ID system architecture in Siemens NX and integrated fluid-handling components into the pressurant tank assembly of a liquid-propulsion vehicle.
+  \item Assessed pressurant tank options, produced mechanical integration models (CAD) and verified fit against vehicle structural constraints and P\&ID.
+  \item Engineered a KiCad PCB radio transmitter (USB-C + MCU) prototype enabling ground-test telemetry links.
+  \item Created CAD geometries for canard-grid fins and ran Ansys Fluent CFD cases across 0--20\textdegree{} deflection.
+\end{itemize}
+\entrygap
+
+\erow{\textbf{CAD Project} (Siemens NX)}{Spring 2025}
+\begin{itemize}
+  \item Recreated a full McDonnell F-101 Voodoo in Siemens NX by extracting and scaling geometric dimensions from multi-view engineering drawings to reconstruct fuselage, wing, and tail geometry.
+  \item Integrated articulated control surfaces (ailerons, elevators, rudder) using parametric assemblies and constraints.
+\end{itemize}
+
+\section{Technical Skills}
+\textbf{Computer Languages:} Python, C++, Java, JavaScript\\
+\textbf{Software:} Siemens NX, Fusion 360, Eagle PCB, KiCad, OpenRocket, XFLR5, Ansys Fluent, Excel\\
+\textbf{Shop Tools:} Bambu A1 Mini, Spot Welder, Belt Sander, Laser Cutter, CNC Plasma Cutter, Table Saw, Drill Press\\
+\textbf{Materials:} Epoxy Resin, Fiberglass, Sheet Metal, Aluminum Pipes, Plywood, PETG, PLA
+
+\section{Leadership and Activities}
+
+\erow{\textbf{Flight Club Aerospace}}{Summer 2021 - Spring 2024}
+Landing Gear Research Lead \textbar{} CAD \textbar{} Fabrication
+\begin{itemize}
+  \item Manufactured wing and control surfaces: cut foam ribs, trimmed aluminum spars with a circular saw, and applied epoxy \& fiberglass layups to shape aerodynamic skins; aligned two 7-ft wings for flight testing.
+  \item Drafted gussets and ribs in Fusion 360 and confirmed fit-checks between structural and aerodynamic components.
+  \item Oversaw logistics for wing transport/disassembly/reassembly and assembled and presented landing-gear recommendations based on structural load and cost analyses.
+\end{itemize}
+\entrygap
+
+\erow{\textbf{Asian American Association}}{Fall 2024 - Present}
+Treasurer \textbar{} Fundraising Officer
+\begin{itemize}
+  \item Managed membership operations for 300+ members, coordinating records and organizational logistics.
+  \item Secured partnerships with 15 on-campus sponsors to support events and fundraising initiatives.
+\end{itemize}
+
+\end{document}
