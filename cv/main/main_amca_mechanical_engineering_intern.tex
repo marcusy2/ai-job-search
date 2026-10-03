@@ -71,7 +71,7 @@
   \item Designed and prototyped a 2-axis TVC gimbal, avionics bay, and recovery system by integrating a Teensy 4.1 flight computer, IMU, and servo actuators into a commercial rocket body.
   \item Designed engine mount and structural parts in Siemens NX (NXOpen/Python) and 3D printed them in PETG/PLA.
   \item Traced a servo linkage resolution bottleneck in the TVC gimbal by characterizing the mechanical actuation ratio, then redesigned the control path to reach sub-degree pointing precision.
-  \item Wrote C++ flight firmware on the Teensy 4.1, fusing MPU-6050 IMU data with a complementary filter to drive a closed-loop PID gimbal controller.
+  \item Wrote C++ flight firmware on the Teensy 4.1, reading the MPU-6050 IMU over I2C and fusing its data with a complementary filter to drive a closed-loop PID gimbal controller.
   \item Performed root cause analysis on two static fire test failures from telemetry logs and frame-by-frame video, isolating a misreferenced attitude axis and an inverted control loop sign.
   \item Bench tested closed loop PID control against a live IMU feed to confirm gimbal response before static fire.
   \item Simulated rocket descent dynamics in Python by sweeping sensor noise, motor burn variance, and wind disturbance across hundreds of Monte Carlo trials to validate a real-time landing-burn control law.
