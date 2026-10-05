@@ -62,24 +62,25 @@
 \section{Education}
 \erow{\textbf{University of Illinois Urbana-Champaign} \textbar{} Champaign, IL}{August 2024 - May 2028}
 \erow{\textit{B.S. in Aerospace Engineering with a Computer Science minor, James Scholar Honors}}{GPA: 3.57/4}
-\textbf{Relevant Coursework:} Thermodynamics, Incompressible Flow, Aerospace Structures, Statics, Dynamics, Engineering Materials, Aerospace Control Systems, Electrical and Electronic Circuits, Linear Algebra
+\textbf{Relevant Coursework:} Thermodynamics, Incompressible Flow, Aerospace Structures, Engineering Materials, Statics, Dynamics, Aerospace Control Systems, Electrical and Electronic Circuits, Linear Algebra
 
+% ===========================================================================
+%  ORGANIZATIONAL AND TECHNICAL EXPERIENCE
+% ===========================================================================
 \section{Organizational and Technical Experience}
 
-\erow{\textbf{TVC Rocket} (Design, Build, Test)}{Summer 2026}
+\erow{\textbf{TVC Rocket} (Independent Project)}{Summer 2026}
 \begin{itemize}
   \item Designed and prototyped a 2-axis TVC gimbal, avionics bay, and recovery system by integrating a Teensy 4.1 flight computer, IMU, and servo actuators into a commercial rocket body.
-  \item Designed engine mount and structural parts in Siemens NX (NXOpen/Python) and 3D printed them in PETG/PLA.
+  \item Designed engine mount and structural parts in Siemens NX and 3D printed them in PETG and PLA.
   \item Traced a servo linkage resolution bottleneck in the TVC gimbal by characterizing the mechanical actuation ratio, then redesigned the control path to reach sub-degree pointing precision.
-  \item Wrote C++ flight firmware on the Teensy 4.1, reading the MPU-6050 IMU over I2C and fusing its data with a complementary filter to drive a closed-loop PID gimbal controller.
-  \item Performed root cause analysis on two static fire test failures from telemetry logs and frame-by-frame video, isolating a misreferenced attitude axis and an inverted control loop sign.
-  \item Bench tested closed loop PID control against a live IMU feed to confirm gimbal response before static fire.
+  \item Conducted root cause investigations on two static fire test failures using telemetry logs and frame-by-frame video, isolating a misreferenced attitude axis and an inverted control loop sign.
+  \item Bench tested closed-loop PID control against a live IMU feed to confirm servo response before static fire.
   \item Simulated rocket descent dynamics in Python by sweeping sensor noise, motor burn variance, and wind disturbance across hundreds of Monte Carlo trials to validate a real-time landing-burn control law.
-  \item Logged telemetry at 83 Hz with zero dropouts across two static fires (15,728 and 12,611 samples).
 \end{itemize}
 \entrygap
 
-\erow{\textbf{Liquid Rocketry at Illinois} (Siemens NX, Fluid Systems)}{Spring 2025 - Present}
+\erow{\textbf{Liquid Rocketry at Illinois} (Project Team)}{Spring 2025 - Present}
 \begin{itemize}
   \item Modeled P\&ID system architecture in Siemens NX and integrated fluid-handling components into the pressurant tank assembly of a liquid-propulsion vehicle.
   \item Assessed pressurant tank options, produced mechanical integration models (CAD) and verified fit against vehicle structural constraints and P\&ID.
@@ -88,18 +89,31 @@
 \end{itemize}
 \entrygap
 
-\erow{\textbf{CAD Project} (Siemens NX)}{Spring 2025}
+\erow{\textbf{Model Rocket Project}}{Fall 2024}
 \begin{itemize}
-  \item Recreated a full McDonnell F-101 Voodoo in Siemens NX by extracting and scaling geometric dimensions from multi-view engineering drawings to reconstruct fuselage, wing, and tail geometry.
-  \item Integrated articulated control surfaces (ailerons, elevators, rudder) using parametric assemblies and constraints.
+  \item Designed custom fin geometry in Siemens NX and fabricated a physical prototype to hit a target apogee.
+  \item Validated against OpenRocket simulations; flight reached 430 ft apogee with 25 ft downrange drift.
+\end{itemize}
+\entrygap
+
+\erow{\textbf{Glider Project}}{Spring 2026}
+\begin{itemize}
+  \item Built and tested gliders, achieving 101 ft glide distance and 3.9 s flight time, ranking 6th in class.
+  \item Iterated on glide path, mass distribution, and wing geometry through flight testing to maximize lift-to-drag.
 \end{itemize}
 
+% ===========================================================================
+%  TECHNICAL SKILLS
+% ===========================================================================
 \section{Technical Skills}
 \textbf{Computer Languages:} Python, C++, Java, JavaScript\\
 \textbf{Software:} Siemens NX, Fusion 360, Eagle PCB, KiCad, OpenRocket, XFLR5, Ansys Fluent, Excel\\
 \textbf{Shop Tools:} Bambu A1 Mini, Spot Welder, Belt Sander, Laser Cutter, CNC Plasma Cutter, Table Saw, Drill Press\\
 \textbf{Materials:} Epoxy Resin, Fiberglass, Sheet Metal, Aluminum Pipes, Plywood, PETG, PLA
 
+% ===========================================================================
+%  LEADERSHIP AND ACTIVITIES
+% ===========================================================================
 \section{Leadership and Activities}
 
 \erow{\textbf{Flight Club Aerospace}}{Summer 2021 - Spring 2024}
