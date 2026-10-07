@@ -31,30 +31,24 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \currentdate{\today}
-\lettercontent{Dear [Hiring Manager / Team],}
+% Contact line only if a named person is verified: \companyname{[Name], [Title]}
+\companyname{[Company Name]}
+\companyaddress{[Street Address] \\ {[City, State ZIP]}}
 
-\lettercontent{[Opening paragraph: name the role and where you found it, state your strongest connection to it in one sentence, and preview why you are a fit. Keep it to 2--3 sentences.]}
+\lettercontent{Dear [Verified Hiring Manager Name / Company Team Hiring Team],}
 
-\lettercontent{[Body paragraph: your most relevant experience, framed toward the tasks in the posting. Follow with 3--5 concrete bullets:]}
+\lettercontent{[P1 Introduction: name the position and season and give a specific reason this team's work interests you. One sentence with degree, major, school, and graduation date. End with a thesis line previewing the two strengths the body will prove.]}
 
-{\raggedright\fontspec[Path = OpenFonts/fonts/raleway/]{Raleway-Medium}\fontsize{11pt}{13pt}\selectfont
-\begin{itemize}
-    \item \textbf{[Achievement 1]:} [concrete result with a number where possible]
-    \item \textbf{[Achievement 2]:} [skill or project mapped to a posting requirement]
-    \item \textbf{[Achievement 3]:} [evidence for a nice-to-have requirement]
-\end{itemize}\par}
-\vspace{6pt}
+\lettercontent{[P2 Main proof: one experience told as a narrative. The problem, what you did with the tools the posting names (only tools you have used), how you worked, and a measured result. Include a decision or diagnosis a CV bullet cannot show, then link it to their work. No bullet lists.]}
 
-\lettercontent{[Connection paragraph: why this company specifically. Reference a verified specific: a product, a stated priority, a team. Never generic.]}
+\lettercontent{[P3 Second proof (optional): the second thesis strength from a different experience, framed as what you can do for them.]}
 
-\lettercontent{[Personal fit paragraph: behavioral strengths and what you bring to the team, 2--3 sentences.]}
-
-\lettercontent{I look forward to hearing from you.}
+\lettercontent{[P4 Why this company and closing: one verified, specific company detail tied to your contribution. Work authorization and on-site availability. Thank them and look forward to discussing how you can contribute.]}
 
 \begin{flushright}
 % Note: no trailing \\ inside \closing{} - cover.cls appends its own \\, and a
 % doubled break triggers "There's no line here to end."
-\closing{Kind regards,}
+\closing{Sincerely,}
 
 \signature{[YOUR NAME]}
 \end{flushright}

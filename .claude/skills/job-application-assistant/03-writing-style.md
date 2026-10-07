@@ -1,5 +1,5 @@
 ---
-framework_version: 1.2.0
+framework_version: 1.3.0
 ---
 
 # Writing Style Guide
@@ -50,35 +50,19 @@ The cover letter is **not a CV repetition**. It should be forward-looking:
 
 ## Cover Letter Structure
 
-### Opening Paragraph
-- State the role and why you're writing (1 sentence)
-- Immediately connect your background to the role (1-2 sentences)
-- Make it specific to this company/role, not a template opener
+The paragraph-by-paragraph spec (header and recipient block, P1 introduction with thesis line,
+P2 main proof narrative, optional P3 second proof, P4 why-this-company + closing) lives in
+`06-cover-letter-templates.md` under "Paragraph Content Spec". Style points that apply on top:
 
-### Body Paragraphs - Task-Solving Focus
-- Lead with the most relevant experience for this specific role
-- Frame content around **which of their tasks you can solve and how**
-- Describe your approach: methods, tools, and knowledge you'll bring
-- Use bullet lists for concrete skills/achievements when appropriate (3-5 bullets)
-- Each bullet should be specific and outcome-oriented
-- Include at least one example that shows initiative
-- Include 1-2 brief examples of past success, but keep the focus forward-looking
-
-### Motivation / Why This Company (place early)
-- The **first section** after the opening should explain why you're applying to *this specific company*
-- Use language and themes from the job posting and company website
-- Focus on how you'll contribute to their goals, not what you gain from employment
-- If you spoke with someone at the company, reference the conversation naturally
-
-### Company-Specific Paragraph
-- Show you've researched the company (mention specific projects, values, or market position)
-- Explain why this company specifically, not just "a company like yours"
-- Connect domain knowledge to their business context
-
-### Closing
-- Brief, confident, forward-looking
-- "I look forward to hearing from you" or "I would welcome the opportunity to discuss..."
-- No begging or over-enthusiasm
+- **Prose, not bullets.** Body paragraphs are short narratives (problem -> action with tools ->
+  result). Bullet lists belong on the CV.
+- **Elaborate, don't restate.** Explain the decision, the diagnosis, the working habit: what a CV
+  bullet cannot show.
+- **Lead with the employer's problem**, and frame each proof as what you can do for them.
+- **Why this company** goes in the final paragraph as one verified, specific detail tied to your
+  contribution, not a list of news items.
+- **Closing:** gratitude plus a forward-looking ask ("I look forward to discussing how I can
+  contribute to ..."). No begging or over-enthusiasm. Sign off "Sincerely,".
 
 ## Bullet Point Style
 - Start with action verb or bold category label
