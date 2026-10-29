@@ -1,0 +1,89 @@
+Marcus D. Yang
+(650) 954-0288 | yangdmarcus@gmail.com | www.linkedin.com/in/marcusdyang | https://projects-website-psi.vercel.app/
+
+Education
+
+University of Illinois Urbana-Champaign | Champaign, IL
+
+August 2024 - May 2028
+
+B.S. in Aerospace Engineering with a Computer Science minor, James Scholar Honors
+
+GPA: 3.57/4
+
+Relevant Coursework: Discrete Structures, Intro to Computer Science I/II, Linear Algebra, Aerospace Control
+
+Systems, Electrical and Electronic Circuits, Dynamics
+
+Organizational and Technical Experience
+
+TVC Rocket (Individual Project)
+
+Summer 2026
+
+• Wrote C++ flight firmware on the Teensy 4.1, reading the MPU-6050 IMU over I2C and fusing its data with a complementary filter to drive a closed-loop PID gimbal controller.
+
+• Built a Python 2D pitch-plane flight simulation and ran Monte Carlo sweeps across hundreds of trials to validate the control law before hardware testing.
+
+• Verified the firmware with hardware-in-the-loop bench tests against a live IMU feed, confirming gimbal servo response in real time before static fire.
+
+• Root-caused two static fire failures purely from telemetry and video data: an atan2 axis-convention bug corrupting the attitude estimate and an inverted control sign.
+
+• Logged onboard telemetry at 83 Hz with zero dropouts across two test campaigns (15,728 and 12,611 samples).
+
+Investment Research Automation Platform (Individual Project)
+
+Ongoing
+
+• Built and maintain a solo Python/Flask data platform (4,200+ lines) running an 8-agent automated pipeline.
+
+• Automated data collection and analysis by integrating the yfinance, NewsAPI, and Anthropic Claude APIs.
+
+• Maintained code quality with a layered dependency architecture and a shared base agent class that isolates prompt changes from business logic.
+
+• Built a SQL database layer and dashboards that score prior predictions against realized 7-day returns.
+
+CS 128/225 Coursework Projects
+
+Spring 2025
+
+• Built a C++ database engine with Rule-of-Three memory management and indexed row storage.
+
+• Implemented a doubly linked list with a custom iterator and a from-scratch merge sort in C++.
+
+• Wrote C++ algorithms for DNA-sequence matching, greedy grid pathfinding, and seam-carving image resizing.
+
+Liquid Rocketry at Illinois (Project Team)
+
+Spring 2025 - Present
+
+• Designed a KiCad schematic for an RP2040 LoRa telemetry transmitter with USB-C and QSPI flash.
+
+• Modeled P&ID system architecture in Siemens NX and integrated components into the pressurant tank assembly.
+
+• Ran ANSYS Fluent CFD cases on canard-grid fin geometries across 0–20° deflection.
+
+Technical Skills
+Computer Languages: Python, C++, Java, JavaScript Software: Siemens NX, Fusion 360, Eagle PCB, KiCad, OpenRocket, XFLR5, Ansys Fluent, Excel Shop Tools: Bambu A1 Mini, Spot Welder, Belt Sander, Laser Cutter, CNC Plasma Cutter, Table Saw, Drill Press Materials: Epoxy Resin, Fiberglass, Sheet Metal, Aluminum Pipes, Plywood, PETG, PLA
+
+Leadership and Activities
+
+Asian American Association Treasurer | Fundraising Officer
+
+Fall 2024 - Present
+
+• Managed membership operations for 300+ members, coordinating records and organizational logistics.
+
+• Secured partnerships with 15 on-campus sponsors to support events and fundraising initiatives.
+
+Flight Club Aerospace Landing Gear Research Lead | CAD | Fabrication
+
+Summer 2021 - Spring 2024
+
+• Manufactured wing and control surfaces: cut foam ribs, trimmed aluminum spars with a circular saw, and applied epoxy & fiberglass layups to shape aerodynamic skins; aligned two 7-ft wings for flight testing.
+
+• Drafted gussets and ribs in Fusion 360 and confirmed fit-checks between structural and aerodynamic components.
+
+• Oversaw logistics for wing transport/disassembly/reassembly and assembled and presented landing-gear recommendations based on structural load and cost analyses.
+
+
