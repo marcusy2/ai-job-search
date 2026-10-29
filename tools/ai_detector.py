@@ -52,6 +52,10 @@ AI_PHRASES = [
     r"\bat its core\b", r"\bin other words\b", r"\bultimately\b", r"\bmoreover\b",
     r"\bfurthermore\b", r"\badditionally\b", r"\bin conclusion\b", r"\bthat's exactly\b",
     r"\bexactly what\b", r"\bnot because\b", r"\bthe gap between\b",
+    # flagged by the candidate (2026-10-29) as AI phrasing in their own Mach answer:
+    # "Both had problems, and I tracked down what actually went wrong"
+    r"\bwhat (actually|really) (went wrong|happened|mattered)\b", r"\bactually\b",
+    r"\b(tracked|figured) (down|out) (what|why)\b", r"\b(failed|failure) anyway\b",
 ]
 TRICOLON = re.compile(r"\b[\w'-]+(?: [\w'-]+){0,3}, [\w'-]+(?: [\w'-]+){0,3},? and [\w'-]+", re.I)
 
