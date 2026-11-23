@@ -2,15 +2,14 @@
 name: overnight-run
 description: >
   Unattended overnight batch: verify the top N Internship Pipeline postings are live, build and export a
-  tailored CV for each, and pull every application's questions with matched Question Bank answers into a
-  morning summary. No browser form filling (the user runs Simplify). Triggers on: /overnight-run,
+  tailored CV for each, and list every application's questions (from ATS APIs) in a morning summary. No browser form filling (the user runs Simplify). Triggers on: /overnight-run,
   overnight run, bedtime run, batch CVs overnight
 ---
 
 # /overnight-run [N] - Overnight CVs + Application Questions
 
 Bedtime prompt: `/overnight-run 10` (default N = 10). The user then works through the list in the
-morning: open each posting, run Simplify autofill, upload the ready CV, paste the prepared answers, submit.
+morning: open each posting, run Simplify autofill, upload the ready CV, answer the listed questions, submit.
 
 The user is asleep. **Never ask questions mid-run.** If something blocks a role, log it and move on.
 **Never fill or submit application forms, create accounts, type passwords, or accept terms.**
@@ -18,7 +17,6 @@ The user is asleep. **Never ask questions mid-run.** If something blocks a role,
 ## Sources
 - Sheet `Junior Internship List` (id `1HXQA89p1nO1-vMFXUi75t6xJtUdvEWHlXMFn6lgGerY`), read-only for this skill:
   - `Internship Pipeline`: Rank, Company, Role, Apply link (col I), My status (col N).
-  - `Question Bank`: question in col A, answer on the row directly below, blank row between entries.
   - `Log`: skip any company + role already there.
 - Candidate facts: `CLAUDE.md`, `.claude/skills/job-application-assistant/01-candidate-profile.md`, `10-bullet-bank.md`.
 
@@ -49,23 +47,20 @@ Pull the posting's application questions from the ATS's public API where one exi
 - Greenhouse: `https://boards-api.greenhouse.io/v1/boards/<board>/jobs/<id>?questions=true`
 - Lever: `https://api.lever.co/v0/postings/<company>/<id>` (custom questions appear on the apply page; fetch `.../apply` if needed)
 - Ashby: `https://api.ashbyhq.com/posting-api/job-board/<board>?includeCompensation=true` (or the posting's application form JSON)
-- Workday / iCIMS / Taleo / SuccessFactors / RippleMatch: no public question API. Note "questions visible only after
-  login" and list the ATS so the user knows to expect an account.
+- Workday / iCIMS / Taleo / SuccessFactors / RippleMatch: no public question API; write "questions not available" and move on.
 
-For each question beyond standard fields (name/contact/EEO/work authorization, which Simplify handles):
-- Best-matching **Question Bank** answer, quoted verbatim and trimmed only to meet a hard word/char limit (flag the trim).
-- No reasonable match → list the exact question text + limit under "Write yourself". **Do not draft new answers.**
-- Flag required uploads beyond a resume (transcript, cover letter, portfolio).
+List each question beyond standard fields (name/contact/EEO/work authorization, which Simplify handles) as its exact
+text + any word/char limit, plus required uploads beyond a resume. **Don't match them to Question Bank answers and don't
+draft answers**; the user does that.
 
 ## Step 3 - Morning summary
 ```
 # Overnight run <date> - <k> CVs ready
 
 ## Ready to apply (in rank order)
-### [Company] - [Role] | ATS | account needed? | posting URL
+### [Company] - [Role] | posting URL
 - CV: cv/Marcus Yang Resume [Company] - [Role].pdf
-- Questions: <question> → Bank answer "<first words>..." (paste from Question Bank row N)
-- Write yourself: <exact question + limit>
+- Questions: <exact question + limit> (or "not available")
 - Extra uploads: <...>
 
 ## Over company cap
