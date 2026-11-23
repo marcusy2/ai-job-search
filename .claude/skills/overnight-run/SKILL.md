@@ -53,6 +53,24 @@ List each question beyond standard fields (name/contact/EEO/work authorization, 
 text + any word/char limit, plus required uploads beyond a resume. **Don't match them to Question Bank answers and don't
 draft answers**; the user does that.
 
+## Step 2b - Hiring manager message
+Draft one message per role for the user to send on LinkedIn (they have Premium). Keep it short: about 4-5 sentences,
+under ~600 characters. Write it in the user's plain voice (see the `feedback-application-answer-voice` memory: no colons,
+aphorisms, tricolons, or "not just X"). Run the AI detector on it if `tools/ai_detector.py` exists; otherwise note that
+it wasn't checked. Structure: applied for [Role] today → one concrete hook → one line on why this team → "happy to
+answer any questions" + thanks. No coffee-chat ask.
+
+Pick the hook to match the role type, using bullet-bank facts only, and match it to the tailored CV's top entry:
+| Role type | Hook |
+|---|---|
+| Controls / GNC / embedded | TVC: C++ PID firmware on Teensy 4.1, IMU fusion |
+| Test / I&T | TVC: staged ground tests, two static fires, telemetry root cause, test stand redesign |
+| Propulsion / fluids | LRI: P&ID + fluid system integration for the IPA/LOX engine, pressurant tank trade |
+| Manufacturing / fabrication | Flight Club composite/wing build (high school, so pair with a current TVC 3D-printed build) |
+| CAD / mechanical design | Siemens NX: LRI pressurant tank integration, F-101 reconstruction |
+| Software-leaning | Investment platform (Python/Flask/SQL) |
+The "why this team" line may only use facts stated in the posting itself. Never invent company claims.
+
 ## Step 3 - Morning summary
 ```
 # Overnight run <date> - <k> CVs ready
@@ -62,6 +80,7 @@ draft answers**; the user does that.
 - CV: cv/Marcus Yang Resume [Company] - [Role].pdf
 - Questions: <exact question + limit> (or "not available")
 - Extra uploads: <...>
+- Hiring manager message (hook: <type>): <draft>
 
 ## Over company cap
 ## Closed / couldn't verify / out of scope
