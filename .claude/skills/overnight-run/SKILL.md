@@ -23,7 +23,8 @@ The user is asleep. **Never ask questions mid-run.** If something blocks a role,
 ## Step 0 - Pick roles
 Walk the pipeline in Rank order. Take rows where **My status (col N) is empty** and the role isn't in `Log`.
 - **Company cap: at most 4 roles per company** in one run, counting the ones already in `Log` that have no result yet.
-  Count by the Company column as written (e.g. "RTX (Pratt & Whitney)" and "RTX (Collins)" are separate). When a
+  Count General Dynamics divisions (GDMS, GD OTS, ...) together as one company; RTX units ("RTX (Pratt & Whitney)",
+  "RTX (Collins)", "RTX (Raytheon)") stay separate. Also skip a role if a near-identical one at the same company is already in `Log`. When a
   company has more eligible rows, keep the best role-fit ones and list the rest under "Over company cap".
 - **Verify before building anything:** check the posting is live on the employer's own system (memory rule: req ID +
   title before calling it closed; otherwise "couldn't verify") and that the term is Summer or Fall 2027 (no Spring).
