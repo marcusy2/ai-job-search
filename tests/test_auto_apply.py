@@ -92,6 +92,16 @@ class QueueTest(unittest.TestCase):
         dry = [["Date"], ["2026-11-28", "3", "", "", link, "Dry run - ready to submit", "", "dry-run"]]
         self.assertEqual(len(aa.build_queue(values, dry, 10, self.repo)["forms"]), 1)
 
+    def test_unconfirmed_after_retry_stays_done(self):
+        link = "https://job-boards.greenhouse.io/muonspace/jobs/2"
+        values = self.log(["", "", "", "", "Muon Space", "Thermal Engineering Intern (Summer 2027)", "", link, ""])
+        hist = [["Date"],
+                ["d", "2", "", "", link, "Needs Manual Review", "addr", "dry-run"],
+                ["d", "2", "", "", link, "Retry", "", ""],
+                ["d", "2", "", "", link, "Dry run - ready to submit", "", "dry-run"],
+                ["d", "2", "", "", link, "Unconfirmed submit - check email", "", "live"]]
+        self.assertEqual(aa.build_queue(values, hist, 10, self.repo)["forms"], [])
+
     def test_cap_and_due_date_order(self):
         rows = [["", "", "", "", "Muon Space", "Thermal Engineering Intern (Summer 2027)", "", f"https://job-boards.greenhouse.io/m/jobs/{i}", ""] for i in range(3)]
         rows[2][0] = "12/1"
