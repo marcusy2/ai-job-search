@@ -168,17 +168,18 @@ def _history_urls(history_values: list) -> set:
     """Links already finished (applied / manual review / unconfirmed submit).
 
     History columns: Date | Log row | Company | Role | Link | Outcome | Blocker | Mode.
-    Dry runs and rows whose Outcome the user changed to 'Retry' are not finished.
+    The LATEST row per link decides, so 'Manual -> Retry -> Unconfirmed submit' stays
+    finished (no double submit), while a Retry the user adds after a blocker re-opens it.
+    Dry-run rows don't change a link's state.
     """
-    done = set()
+    latest = {}
     for row in history_values[1:]:
         link, outcome = _cell(row, 4), _cell(row, 5).lower()
-        if link and any(outcome.startswith(s) for s in MANUAL_STATUSES):
-            done.add(link)
-    for row in history_values[1:]:  # a later Retry row re-opens the link
-        if _cell(row, 5).lower() == "retry":
-            done.discard(_cell(row, 4))
-    return done
+        if not link or outcome.startswith("dry run"):
+            continue
+        latest[link] = outcome
+    return {link for link, outcome in latest.items()
+            if any(outcome.startswith(s) for s in MANUAL_STATUSES)}
 
 
 def _dry_ready_urls(history_values: list) -> set:
