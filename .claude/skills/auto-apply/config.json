@@ -1,0 +1,17 @@
+{
+  "max_applications_per_day": 10,
+  "dry_run": true,
+  "delay_between_apps_sec": [45, 120],
+  "field_pause_sec": [1, 4],
+  "tabs": {
+    "log": "Log",
+    "history": "Auto-Apply Runs",
+    "question_bank": "Question Bank",
+    "company_status": "Company Status",
+    "pipeline": "Internship Pipeline"
+  },
+  "write_results_applied": true,
+  "why_company_detector_retries": 3,
+  "summary_dir": "documents/auto-apply",
+  "personal_profile": "~/.auto-apply/profile.json"
+}
