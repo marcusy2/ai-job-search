@@ -38,7 +38,7 @@ $allowed = @(
   'mcp__claude_ai_Gmail__search_threads',
   'mcp__claude_ai_Gmail__get_thread',
   'WebFetch', 'WebSearch', 'Read', 'Glob', 'Grep', 'Skill(auto-apply)',
-  'Write(documents/auto-apply/**)', 'Edit(documents/auto-apply/**)',
+  'Edit(documents/auto-apply/**)',
   'Bash(python tools/auto_apply.py:*)',
   'Bash(~/.venvs/ai-detector/Scripts/python tools/ai_detector.py:*)',
   'Bash(mkdir -p documents/auto-apply:*)'
@@ -59,6 +59,9 @@ $logDir = Join-Path $repo 'documents\auto-apply\logs'
 New-Item -ItemType Directory -Force $logDir | Out-Null
 $log = Join-Path $logDir ("run_{0}.log" -f (Get-Date -Format 'yyyy-MM-dd_HHmm'))
 "[$(Get-Date -Format s)] $prompt" | Out-File $log -Encoding utf8
+# Windows PowerShell turns any native stderr line into an error record; with 'Stop'
+# a harmless CLI warning would abort the run, so relax it for the claude call.
+$ErrorActionPreference = 'Continue'
 claude -p $prompt --mcp-config $mcp --allowedTools $allowed --disallowedTools $denied 2>&1 |
   Tee-Object -FilePath $log -Append
 exit $LASTEXITCODE
