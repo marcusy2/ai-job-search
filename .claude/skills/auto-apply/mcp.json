@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "playwright": {
+      "type": "stdio",
+      "command": "cmd",
+      "args": [
+        "/c", "npx", "-y", "@playwright/mcp@0.0.86",
+        "--browser", "chrome",
+        "--user-data-dir", "${USERPROFILE}\\.auto-apply\\chrome-profile",
+        "--output-dir", "documents/auto-apply/playwright",
+        "--viewport-size", "1366,900",
+        "--timeout-navigation", "60000"
+      ]
+    }
+  }
+}

@@ -116,3 +116,6 @@ company_research/*.json
 
 # Brainstorm mockups (superpowers visual companion) - never ship
 .superpowers/
+
+# Auto-apply run output (screenshots, filled answers, contacts) and personal data - never commit
+documents/auto-apply/
