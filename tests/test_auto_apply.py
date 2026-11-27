@@ -160,6 +160,13 @@ class LocationTest(unittest.TestCase):
             self.assertEqual(aa.location_for(loc, p), "San Mateo, CA", loc)
 
 
+class HistorySlotTest(unittest.TestCase):
+    def test_slot(self):
+        hist = [["Date"], ["d", "1", "", "", "https://a"], ["d", "2", "", "", "https://b"]]
+        self.assertEqual(aa.history_slot(hist, "https://b"), 3)
+        self.assertIsNone(aa.history_slot(hist, "https://c"))
+
+
 class QuestionBankTest(unittest.TestCase):
     def test_blocks(self):
         values = [["Q1?"], ["A1 line"], [], ["Largest programming project"], [], [], ["Q3"], ["a"], ["b"]]
