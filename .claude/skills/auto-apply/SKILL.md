@@ -111,7 +111,9 @@ every required field is filled and the upload shows the right filename.
   - Confirmation page ("thank you", "application received/submitted") -> **Applied**.
   - Validation error you can fix from rule-2 sources -> fix and submit once more (the form never went through).
   - Anything else (new page asking for login/CAPTCHA, unclear state) -> check Gmail with `search_threads`
-    (`newer_than:1d` + company name) for a confirmation. Found -> Applied. Not found -> `Unconfirmed submit -
+    (`newer_than:1d` + company name; confirmations go to the profile email, which this Gmail receives). Portals
+    group same-company confirmations into one thread, so open it with `get_thread` and match the **role title**
+    in the message body. Found -> Applied. Not found -> `Unconfirmed submit -
     check email/portal before re-applying`.
 
 **e. Record Applied in the Log** (live only): re-read that Log row first. If B or G is no longer empty, the user
@@ -141,7 +143,9 @@ The user wants exactly **one row per role** holding its final outcome; no attemp
 - Row: `<YYYY-MM-DD> | <Log row> | Company | Role | Link | Outcome | Blocker or unanswered question (blank if Applied) | live`.
 
 ## Step 5 - Morning summary
-Write `documents/auto-apply/morning_summary_<YYYY-MM-DD>.md` (bare full URLs, no markdown links):
+Write `documents/auto-apply/morning_summary_<YYYY-MM-DD>.md` (bare full URLs, no markdown links). Several runs
+can happen in one day: if the file exists, Read it and put this run's section **above** the existing content
+(never overwrite earlier runs). Start each section with the run time, e.g. `# Auto-apply 2026-11-27 02:31 - live ...`:
 ```
 # Auto-apply <date> - <mode> - <k> applied, <m> need review
 
