@@ -108,6 +108,32 @@ class QueueTest(unittest.TestCase):
         self.assertEqual([f["row"] for f in aa.build_queue(values, [], 10, self.repo)["forms"]], [3, 2])
 
 
+    def test_cover_letter_not_matched_across_roles(self):
+        (self.repo / "cover_letters" / "Marcus Yang Cover Letter Muon Space - GNC Hardware Engineering Intern.pdf").write_bytes(b"%PDF")
+        self.assertIsNone(aa.find_document("Muon Space", "Thermal Engineering Intern (Summer 2027)", self.repo / "cover_letters", "cover"))
+        self.assertIsNotNone(aa.find_document("Muon Space", "GNC Hardware Engineering Intern (Summer 2027)", self.repo / "cover_letters", "cover"))
+
+    def test_role_picks_right_sibling(self):
+        for name in ["Marcus Yang Resume Vast - Mechanical Aerospace Engineering Internship.pdf",
+                     "Marcus Yang Resume Bedrock Robotics - Sensor Hardware Test Engineer Intern.pdf",
+                     "Marcus Yang Resume Bedrock Robotics - Hardware Engineer Intern, Machine Integration & Test.pdf"]:
+            (self.repo / "cv" / name).write_bytes(b"%PDF")
+        cv = self.repo / "cv"
+        self.assertIn("Manufacturing", aa.find_document("Vast", "Emerging Talent - Manufacturing Engineering Internship", cv))
+        self.assertIn("Mechanical Aerospace", aa.find_document("Vast", "Emerging Talent - Mechanical/Aerospace Engineering Internship", cv))
+        self.assertIn("Sensor", aa.find_document("Bedrock Robotics", "2027 Internship Sensor Hardware Test Engineer", cv))
+        self.assertIn("Machine Integration", aa.find_document("Bedrock Robotics", "2027 Internship Hardware Engineer, Machine Integration & Test", cv))
+
+
+class LocationTest(unittest.TestCase):
+    def test_midwest(self):
+        p = {"current_location": "San Mateo, CA", "midwest_location": "Champaign, IL"}
+        for loc in ["Cedar Rapids, IA", "Olathe, KS", "Brecksville, OH", "Grand Rapids, MI", "Wichita, Kansas"]:
+            self.assertEqual(aa.location_for(loc, p), "Champaign, IL", loc)
+        for loc in ["Long Beach, CA", "San Francisco, CA", "Golden, CO", "", "Mojave, CA (in office)", "Little Rock, Arkansas"]:
+            self.assertEqual(aa.location_for(loc, p), "San Mateo, CA", loc)
+
+
 class QuestionBankTest(unittest.TestCase):
     def test_blocks(self):
         values = [["Q1?"], ["A1 line"], [], ["Largest programming project"], [], [], ["Q3"], ["a"], ["b"]]
