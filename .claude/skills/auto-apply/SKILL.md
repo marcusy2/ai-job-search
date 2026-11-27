@@ -72,7 +72,7 @@ Track for every row: outcome, blocker, every field you filled and its value sour
 | Field | Source |
 |---|---|
 | Name, email, phone, LinkedIn, website/portfolio, GitHub, school, degree, major, GPA, grad date, start date, work auth, sponsorship (now or future), citizenship / U.S. person, clearance (active / eligible / willing), criminal conviction, relocation, onsite, age, previously employed here / by any government agency, previous employers, how did you hear | `profile.json` |
-| Single "Location" / "current city" field | `profile.current_location` |
+| Single "Location" / "current city" field | `python tools/auto_apply.py location "<job location from Log col I or the posting>"`: San Mateo, CA, or Champaign, IL when the job is in a Midwest state |
 | Street address / mailing address fields (street, city, state, ZIP, country) | `profile.address` |
 | "Additional documents" / "other attachments" / portfolio / work-sample upload | `profile.additional_files_upload` (portfolio PDF) via `browser_file_upload` |
 | EEO: gender, Hispanic/Latino, race, veteran, disability | `profile.eeo` (pick the option that says the same thing) |
@@ -94,9 +94,9 @@ If a resume-parser auto-fills fields, check them against `profile.json` and fix 
    from the CV (TVC rocket, Liquid Rocketry P&ID/pressurant tank, Flight Club wing build) that's actually on
    the uploaded CV. Plain voice: short-to-medium sentences, "I want to" / "I think", no colons, tricolons,
    aphorisms, "not just", "actually", or setup-then-reveal lines. Respect the limit (default 100-150 words).
-3. Gate: write it to `RUN_DIR/why_<slug>.txt`, run
-   `~/.venvs/ai-detector/Scripts/python tools/ai_detector.py RUN_DIR/why_<slug>.txt 2>/dev/null` (the runner
-   already sets `TRANSFORMERS_VERBOSITY=error`). Rewrite until PASS, up to
+3. Gate: write it to `RUN_DIR/why_<slug>.txt`, run exactly
+   `python tools/auto_apply.py detect RUN_DIR/why_<slug>.txt` (no env prefix, no redirects: that is the only
+   allowed form). Rewrite until PASS, up to
    `why_company_detector_retries`. Re-check facts after each rewrite. Still failing -> Manual
    `Why-company answer failed AI detector (score X)` and save the last draft for the summary.
    If the detector venv is missing, use the draft but note `detector not run` in the summary.

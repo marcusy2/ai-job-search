@@ -106,16 +106,41 @@ def _norm(text: str) -> str:
 
 _PREFIX = {"resume": "Marcus Yang Resume ", "cover": "Marcus Yang Cover Letter "}
 
+# Words every intern title shares; matching on them paired "Thermal Engineering Intern"
+# with "GNC Hardware Engineering Intern" (difflib 0.74).
+_GENERIC = {
+    "intern", "interns", "internship", "internships", "engineer", "engineering", "summer", "fall",
+    "spring", "2026", "2027", "2028", "co", "op", "coop", "the", "and", "of", "a", "an", "in",
+    "for", "to", "program", "student", "undergraduate", "college", "onsite", "position", "role",
+}
+
+
+def _key_tokens(text: str) -> set:
+    return {t for t in _norm(text).split() if t not in _GENERIC}
+
+
+def _role_score(want: str, have: str) -> float:
+    """Share of the shorter title's distinctive words found in the other title.
+
+    Generic-only titles ("Engineering Intern") fall back to a strict fuzzy ratio.
+    """
+    a, b = _key_tokens(want), _key_tokens(have)
+    if not a or not b:
+        ratio = difflib.SequenceMatcher(None, _norm(want), _norm(have)).ratio()
+        return ratio if ratio >= 0.9 else 0.0
+    return len(a & b) / min(len(a), len(b))
+
 
 def find_document(company: str, role: str, folder: Path, kind: str = "resume"):
     """Best-matching exported PDF for company + role, or None.
 
     Filenames follow 'Marcus Yang Resume [Company] - [Role].pdf'. The Log's company
     can be a short form ("Freeform", "Vast"), so the company only has to be a
-    token-prefix match, while the role needs a fuzzy ratio >= 0.6.
+    token-prefix match, while the role must share >= 75% of its distinctive words
+    (ties broken by overall fuzzy similarity).
     """
     prefix = _PREFIX[kind]
-    want_company, want_role = _norm(company), _norm(role)
+    want_company = _norm(company)
     if not want_company or not folder.is_dir():
         return None
     best, best_score = None, 0.0
@@ -126,10 +151,11 @@ def find_document(company: str, role: str, folder: Path, kind: str = "resume"):
         fc = _norm(file_company)
         if not (fc.startswith(want_company) or want_company.startswith(fc)):
             continue
-        score = difflib.SequenceMatcher(None, want_role, _norm(file_role)).ratio()
+        score = _role_score(role, file_role)
+        score += 0.01 * difflib.SequenceMatcher(None, _norm(role), _norm(file_role)).ratio()
         if score > best_score:
             best, best_score = pdf, score
-    if best is None or best_score < 0.6:
+    if best is None or best_score < 0.75:
         return None
     return str(best.resolve())
 
@@ -226,6 +252,49 @@ def parse_question_bank(values: list) -> list:
     return pairs
 
 
+MIDWEST = {
+    "IL", "IN", "IA", "KS", "MI", "MN", "MO", "NE", "ND", "OH", "SD", "WI",
+    "ILLINOIS", "INDIANA", "IOWA", "KANSAS", "MICHIGAN", "MINNESOTA", "MISSOURI", "NEBRASKA",
+    "NORTH DAKOTA", "OHIO", "SOUTH DAKOTA", "WISCONSIN",
+}
+
+
+def is_midwest(job_location: str) -> bool:
+    """True if the job location names a Midwest state (e.g. 'Cedar Rapids, IA', 'Olathe, Kansas')."""
+    text = (job_location or "").upper()
+    # State codes only right after a comma ("Cedar Rapids, IA"), so "(in office)" isn't Indiana.
+    codes = set(re.findall(r",\s*([A-Z]{2})\b", text))
+    names = {s for s in MIDWEST if len(s) > 2 and re.search(rf"(?<![A-Z]){s}\b", text)}
+    return bool((codes & MIDWEST) or names)
+
+
+def location_for(job_location: str, profile: dict) -> str:
+    """Single 'current location' answer: Champaign for Midwest jobs, else the home city."""
+    if is_midwest(job_location):
+        return profile.get("midwest_location", "Champaign, IL")
+    return profile.get("current_location", "San Mateo, CA")
+
+
+DETECTOR_PY = Path.home() / ".venvs" / "ai-detector" / "Scripts" / "python.exe"
+
+
+def run_detector(path: str) -> int:
+    """Run tools/ai_detector.py in its venv (keeps the skill's permission rule to one command)."""
+    import os
+    import subprocess
+
+    if not DETECTOR_PY.exists():
+        print(f"DETECTOR MISSING: {DETECTOR_PY}")
+        return 2
+    env = dict(os.environ, TRANSFORMERS_VERBOSITY="error", HF_HUB_DISABLE_PROGRESS_BARS="1")
+    proc = subprocess.run(
+        [str(DETECTOR_PY), str(REPO / "tools" / "ai_detector.py"), path],
+        env=env, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True,
+    )
+    print(proc.stdout, end="")
+    return proc.returncode
+
+
 def delays(n: int, lo: float, hi: float, seed=None) -> list:
     rng = random.Random(seed)
     return [round(rng.uniform(lo, hi)) for _ in range(n)]
@@ -254,8 +323,19 @@ def main(argv=None) -> int:
     lo, hi = config.get("delay_between_apps_sec", [45, 120])
     d.add_argument("--min", type=float, default=lo)
     d.add_argument("--max", type=float, default=hi)
+    det = sub.add_parser("detect", help="AI-detector gate on a text file")
+    det.add_argument("file")
+    loc = sub.add_parser("location", help="current-location answer for a job location")
+    loc.add_argument("job_location")
+    loc.add_argument("--profile", default=str(Path.home() / ".auto-apply" / "profile.json"))
     args = ap.parse_args(argv)
 
+    if args.cmd == "detect":
+        return run_detector(args.file)
+    if args.cmd == "location":
+        profile = json.loads(Path(args.profile).read_text(encoding="utf-8"))
+        print(location_for(args.job_location, profile))
+        return 0
     if args.cmd == "triage":
         out = triage(args.url)
     elif args.cmd == "queue":
