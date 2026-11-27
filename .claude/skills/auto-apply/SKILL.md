@@ -71,7 +71,10 @@ Track for every row: outcome, blocker, every field you filled and its value sour
 `browser_type` `slowly: true`):
 | Field | Source |
 |---|---|
-| Name, email, phone, location, LinkedIn, website/portfolio, GitHub, school, degree, major, GPA, grad date, start date, work auth, sponsorship, citizenship / U.S. person, clearance, relocation, onsite, age, previously employed, how did you hear | `profile.json` |
+| Name, email, phone, LinkedIn, website/portfolio, GitHub, school, degree, major, GPA, grad date, start date, work auth, sponsorship (now or future), citizenship / U.S. person, clearance (active / eligible / willing), criminal conviction, relocation, onsite, age, previously employed here / by any government agency, previous employers, how did you hear | `profile.json` |
+| Single "Location" / "current city" field | `profile.current_location` |
+| Street address / mailing address fields (street, city, state, ZIP, country) | `profile.address` |
+| "Additional documents" / "other attachments" / portfolio / work-sample upload | `profile.additional_files_upload` (portfolio PDF) via `browser_file_upload` |
 | EEO: gender, Hispanic/Latino, race, veteran, disability | `profile.eeo` (pick the option that says the same thing) |
 | Resume upload | the queue item's `resume` path (absolute) via `browser_file_upload` |
 | Cover letter upload | `cover_letter` path if the form has the field. None on file: optional -> skip; required -> Manual `Cover letter required, none on file` |
