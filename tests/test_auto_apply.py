@@ -125,6 +125,22 @@ class QueueTest(unittest.TestCase):
         self.assertIn("Machine Integration", aa.find_document("Bedrock Robotics", "2027 Internship Hardware Engineer, Machine Integration & Test", cv))
 
 
+    def test_skip_portals_and_dry_ready(self):
+        gh = "https://job-boards.greenhouse.io/muonspace/jobs/2"
+        values = self.log(
+            ["", "", "", "", "Sierra Space", "2027 Summer Internship - Propulsion Engineering", "", "https://sierraspace.wd1.myworkdayjobs.com/x", ""],
+            ["", "", "", "", "Intuitive Machines", "AIT", "", "https://workforcenow.adp.com/x?jobId=1", ""],
+            ["", "", "", "", "Muon Space", "Thermal Engineering Intern (Summer 2027)", "", gh, ""],
+        )
+        q = aa.build_queue(values, [], 10, self.repo, skip_portals=("workday", "adp"))
+        self.assertEqual(q["manual"], [])
+        self.assertEqual(len(q["portal_skipped"]), 2)
+        hist = [["Date"], ["d", "4", "", "", gh, "Dry run - ready to submit", "", "dry-run"]]
+        self.assertEqual(aa.build_queue(values, hist, 10, self.repo, skip_dry_ready=True)["forms"], [])
+        hist.append(["d", "4", "", "", gh, "Retry", "", ""])
+        self.assertEqual(len(aa.build_queue(values, hist, 10, self.repo, skip_dry_ready=True)["forms"]), 1)
+
+
 class LocationTest(unittest.TestCase):
     def test_midwest(self):
         p = {"current_location": "San Mateo, CA", "midwest_location": "Champaign, IL"}

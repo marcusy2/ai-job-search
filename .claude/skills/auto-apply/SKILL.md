@@ -45,6 +45,9 @@ that blocks a row goes to Needs Manual Review with a reason, and the run moves o
    `update_spreadsheet` (addSheet) and header row
    `Date | Log row | Company | Role | Link | Outcome | Blocker / unanswered question | Mode`, then use `[]`.
 3. `python tools/auto_apply.py queue --log RUN_DIR/log.json --history RUN_DIR/history.json --max <cap>`
+   (add `--skip-dry-ready` in dry mode, so repeated dry runs walk down the queue instead of redoing clean rows)
+   - `portal_skipped`: Workday/ADP rows (config `skip_portals`). The user doesn't want them: don't open them,
+     don't write history rows for them, only give the count in the summary's Run notes.
    - `forms`: rows to open in the browser (link in H, B and G empty, CV PDF found, portal not account-gated).
    - `manual`: rows the script already routed (account-gated portal, no CV, missing company/role). Record them
      (Step 4) without opening a browser. They don't count toward the cap.
@@ -64,14 +67,15 @@ Track for every row: outcome, blocker, every field you filled and its value sour
 - Login or account-creation wall, email/SMS code, visible CAPTCHA challenge (reCAPTCHA checkbox or image grid,
   hCaptcha, Cloudflare/Turnstile interstitial) -> Manual with the exact blocker.
 - Career-site link (`tier: attempt`): click its Apply button once. If the destination host changes, run
-  `python tools/auto_apply.py triage <new url>` and follow that verdict. A multi-page portal that errors or
+  `python tools/auto_apply.py triage <new url>` and follow that verdict. If it lands on a `skip_portals` ATS
+  (Workday, ADP), close the tab and drop the row like `portal_skipped`: no history row. A multi-page portal that errors or
   loops once -> Manual: `Multi-page portal failed: <what happened>`.
 
 **b. Fill** (pause `field_pause_sec` between sections with `browser_wait_for` time; type free text with
 `browser_type` `slowly: true`):
 | Field | Source |
 |---|---|
-| Name, email, phone, LinkedIn, website/portfolio, GitHub, school, degree, major, GPA, grad date, start date, work auth, sponsorship (now or future), citizenship / U.S. person, clearance (active / eligible / willing), criminal conviction, relocation, onsite, age, previously employed here / by any government agency, previous employers, how did you hear | `profile.json` |
+| Name, email, phone, LinkedIn, website/portfolio, GitHub, school, degree, major, GPA, grad date, start date, work auth, sponsorship (now or future), citizenship / U.S. person, clearance (active / eligible / willing), criminal conviction, relocation, onsite / in office 5 days / able to commute to this location (always Yes), age, previously employed here / by any government agency, previous employers, how did you hear | `profile.json` |
 | Single "Location" / "current city" field | `python tools/auto_apply.py location "<job location from Log col I or the posting>"`: San Mateo, CA, or Champaign, IL when the job is in a Midwest state |
 | Street address / mailing address fields (street, city, state, ZIP, country) | `profile.address` |
 | "Additional documents" / "other attachments" / portfolio / work-sample upload | `profile.additional_files_upload` (portfolio PDF) via `browser_file_upload` |

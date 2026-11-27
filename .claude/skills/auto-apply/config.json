@@ -11,6 +11,7 @@
     "pipeline": "Internship Pipeline"
   },
   "write_results_applied": true,
+  "skip_portals": ["workday", "adp"],
   "why_company_detector_retries": 3,
   "summary_dir": "documents/auto-apply",
   "personal_profile": "~/.auto-apply/profile.json"
