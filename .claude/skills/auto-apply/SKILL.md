@@ -40,6 +40,11 @@ that blocks a row goes to Needs Manual Review with a reason, and the run moves o
   summary saying which one and stop.
 
 ## Step 1 - Queue
+**Saving sheet data:** write each `get_values` result to its `RUN_DIR` file with the Write tool as the complete
+`values` array exactly as returned. Never filter or retype rows and never write helper scripts (only
+`python tools/auto_apply.py ...` is allowed; anything else is blocked by the permission list). If a write fails,
+stop and report it rather than reconstructing the data by hand.
+
 1. `get_values` on `Log!A1:I1000` -> save the raw result to `RUN_DIR/log.json`.
 2. History tab `Auto-Apply Runs` (`A1:H2000`) -> `RUN_DIR/history.json`. If the tab doesn't exist, create it with
    `update_spreadsheet` (addSheet) and header row
