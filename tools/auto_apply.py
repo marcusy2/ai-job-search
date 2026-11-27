@@ -253,6 +253,14 @@ def _due_key(due: str):
     return (0, int(m.group(1)), int(m.group(2))) if m else (1, 0, 0)
 
 
+def history_slot(history_values: list, link: str):
+    """Sheet row to overwrite for this link (one row per role), or None to append."""
+    for i, row in enumerate(history_values[1:], start=2):
+        if _cell(row, 4) == link.strip():
+            return i
+    return None
+
+
 def parse_question_bank(values: list) -> list:
     """Question Bank tab: question row, answer row(s), blank row, repeat (column A).
 
@@ -343,6 +351,9 @@ def main(argv=None) -> int:
     lo, hi = config.get("delay_between_apps_sec", [45, 120])
     d.add_argument("--min", type=float, default=lo)
     d.add_argument("--max", type=float, default=hi)
+    hs = sub.add_parser("history-slot", help="row to overwrite for a link in Auto-Apply Runs, or 'append'")
+    hs.add_argument("--history", required=True)
+    hs.add_argument("--link", required=True)
     det = sub.add_parser("detect", help="AI-detector gate on a text file")
     det.add_argument("file")
     loc = sub.add_parser("location", help="current-location answer for a job location")
@@ -350,6 +361,10 @@ def main(argv=None) -> int:
     loc.add_argument("--profile", default=str(Path.home() / ".auto-apply" / "profile.json"))
     args = ap.parse_args(argv)
 
+    if args.cmd == "history-slot":
+        slot = history_slot(_load_values(args.history), args.link)
+        print(slot if slot else "append")
+        return 0
     if args.cmd == "detect":
         return run_detector(args.file)
     if args.cmd == "location":

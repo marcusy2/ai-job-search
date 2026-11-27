@@ -45,15 +45,14 @@ that blocks a row goes to Needs Manual Review with a reason, and the run moves o
    `update_spreadsheet` (addSheet) and header row
    `Date | Log row | Company | Role | Link | Outcome | Blocker / unanswered question | Mode`, then use `[]`.
 3. `python tools/auto_apply.py queue --log RUN_DIR/log.json --history RUN_DIR/history.json --max <cap>`
-   (add `--skip-dry-ready` in dry mode, so repeated dry runs walk down the queue instead of redoing clean rows)
    - `portal_skipped`: Workday/ADP rows (config `skip_portals`). The user doesn't want them: don't open them,
      don't write history rows for them, only give the count in the summary's Run notes.
    - `forms`: rows to open in the browser (link in H, B and G empty, CV PDF found, portal not account-gated).
    - `manual`: rows the script already routed (account-gated portal, no CV, missing company/role). Record them
      (Step 4) without opening a browser. They don't count toward the cap.
    - `over_cap`: list them in the summary as "Queued for tomorrow".
-   - `already_done`: finished in a past run; ignore. (The user re-queues a row by adding a history row with
-     Outcome `Retry`.)
+   - `already_done`: finished in a past run; ignore. (The user re-queues a role by changing its Outcome cell
+     to `Retry`.)
 4. Question Bank: `get_values` on `'Question Bank'!A1:A1000` -> `RUN_DIR/qbank_raw.json`, then
    `python tools/auto_apply.py qbank --values RUN_DIR/qbank_raw.json` -> Q/A pairs.
 5. Contacts: `get_values` on `'Company Status'!A1:F250` and `'Internship Pipeline'!D1:K299` (Company + Club notes).
@@ -107,7 +106,7 @@ If a resume-parser auto-fills fields, check them against `profile.json` and fix 
 
 **d. Before submit**, `browser_take_screenshot` (fullPage) to `RUN_DIR/screens/<slug>.png` and snapshot-check that
 every required field is filled and the upload shows the right filename.
-- **Dry run:** stop here. Outcome `Dry run - ready to submit`. Don't touch the Log.
+- **Dry run:** stop here. Report it as ready to submit in the summary only. Don't touch the Log or the history tab.
 - **Live:** click Submit once, wait up to 20 s, snapshot.
   - Confirmation page ("thank you", "application received/submitted") -> **Applied**.
   - Validation error you can fix from rule-2 sources -> fix and submit once more (the form never went through).
@@ -123,19 +122,23 @@ already handled it, so skip the write and note it. Otherwise `update_values`:
   asked, each only if the cell is empty.
 Re-read the row and confirm the values landed.
 
-**f. Close and pace.** Close the tab (`browser_tabs` close), append the history row (Step 4), then
+**f. Close and pace.** Close the tab (`browser_tabs` close), write the history row (Step 4, live only), then
 `browser_wait_for` this row's random delay (45-120 s) before the next form. No delay after the last one.
 
 The cap counts form rows opened in the browser (dry or live). Script-routed manual rows don't count.
 
 ## Step 3 - Networking contacts
-For each Applied (or dry-run-ready) row, collect what the sheet already knows about the company: Company Status
+For each Applied (or, in a dry run, ready-to-submit) row, collect what the sheet already knows about the company: Company Status
 `Club notes`, Pipeline `Club notes` / `Where it came from`, and whether it's on Sheet3. Don't search for new people.
 
-## Step 4 - History rows
-Append one row per processed Log row to `Auto-Apply Runs`:
-`<YYYY-MM-DD> | <Log row> | Company | Role | Link | Outcome | Blocker or unanswered question | dry-run/live`.
-Outcomes: `Applied`, `Needs Manual Review`, `Unconfirmed submit`, `Dry run - ready to submit`.
+## Step 4 - History rows (one row per role, final outcome only)
+The user wants exactly **one row per role** holding its final outcome; no attempt history.
+- **Dry run: write nothing** to `Auto-Apply Runs` (dry results go only in the summary).
+- **Live:** outcomes are `Applied`, `Needs Manual Review`, `Unconfirmed submit`. Re-read the tab into
+  `RUN_DIR/history.json`, then `python tools/auto_apply.py history-slot --history RUN_DIR/history.json --link <url>`:
+  a row number -> `update_values` that row `A:H`, overwriting it (this is how a `Retry` row gets its new result);
+  `append` -> `append_values` a new row.
+- Row: `<YYYY-MM-DD> | <Log row> | Company | Role | Link | Outcome | Blocker or unanswered question (blank if Applied) | live`.
 
 ## Step 5 - Morning summary
 Write `documents/auto-apply/morning_summary_<YYYY-MM-DD>.md` (bare full URLs, no markdown links):
