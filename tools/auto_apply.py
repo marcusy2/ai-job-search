@@ -181,14 +181,28 @@ def _history_urls(history_values: list) -> set:
     return done
 
 
-def build_queue(log_values: list, history_values: list, max_forms: int, repo: Path = REPO) -> dict:
+def _dry_ready_urls(history_values: list) -> set:
+    """Links whose latest history row is a clean dry run (used to walk the queue in dry mode)."""
+    latest = {}
+    for row in history_values[1:]:
+        if _cell(row, 4):
+            latest[_cell(row, 4)] = _cell(row, 5).lower()
+    return {link for link, outcome in latest.items() if outcome.startswith("dry run")}
+
+
+def build_queue(log_values: list, history_values: list, max_forms: int, repo: Path = REPO,
+                skip_portals=(), skip_dry_ready: bool = False) -> dict:
     """Log rows ready to apply: link in H, date applied (B) and results (G) empty.
 
     Log columns: A due date | B date applied | C Cover Letter? | D questions? |
     E company | F position | G results | H website | I location.
+    skip_portals: ATS names (e.g. workday, adp) dropped silently: not opened, not logged.
+    skip_dry_ready: also skip rows whose latest outcome is a clean dry run.
     """
     done = _history_urls(history_values)
-    forms, manual, skipped = [], [], []
+    if skip_dry_ready:
+        done |= _dry_ready_urls(history_values)
+    forms, manual, skipped, portal_skipped = [], [], [], []
     for i, row in enumerate(log_values[1:], start=2):
         company, role, link = _cell(row, 4), _cell(row, 5), _cell(row, 7)
         if not link.startswith("http") or _cell(row, 1) or _cell(row, 6):
@@ -205,6 +219,9 @@ def build_queue(log_values: list, history_values: list, max_forms: int, repo: Pa
             "due": _cell(row, 0),
             **triage(link),
         }
+        if item["ats"] in skip_portals:
+            portal_skipped.append({"row": i, "company": company, "ats": item["ats"]})
+            continue
         item["resume"] = find_document(company, role, repo / "cv", "resume")
         item["cover_letter"] = find_document(company, role, repo / "cover_letters", "cover")
         if item["tier"] == "manual":
@@ -226,6 +243,7 @@ def build_queue(log_values: list, history_values: list, max_forms: int, repo: Pa
         "over_cap": forms[max_forms:],
         "manual": manual,
         "already_done": skipped,
+        "portal_skipped": portal_skipped,
     }
 
 
@@ -316,6 +334,7 @@ def main(argv=None) -> int:
     q.add_argument("--history", required=True)
     q.add_argument("--max", type=int, default=config.get("max_applications_per_day", 10))
     q.add_argument("--repo", type=Path, default=REPO, help="checkout whose cv/ and cover_letters/ to search")
+    q.add_argument("--skip-dry-ready", action="store_true", help="dry mode: skip rows already dry-run clean")
     b = sub.add_parser("qbank")
     b.add_argument("--values", required=True)
     d = sub.add_parser("delays")
@@ -339,7 +358,9 @@ def main(argv=None) -> int:
     if args.cmd == "triage":
         out = triage(args.url)
     elif args.cmd == "queue":
-        out = build_queue(_load_values(args.log), _load_values(args.history), args.max, args.repo)
+        out = build_queue(_load_values(args.log), _load_values(args.history), args.max, args.repo,
+                          skip_portals=tuple(config.get("skip_portals", [])),
+                          skip_dry_ready=args.skip_dry_ready)
     elif args.cmd == "qbank":
         out = parse_question_bank(_load_values(args.values))
     else:
