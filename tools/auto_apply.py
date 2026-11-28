@@ -208,6 +208,11 @@ def build_queue(log_values: list, history_values: list, max_forms: int, repo: Pa
         company, role, link = _cell(row, 4), _cell(row, 5), _cell(row, 7)
         if not link.startswith("http") or _cell(row, 1) or _cell(row, 6):
             continue
+        if not company or not role:
+            # A bare link with no company/position isn't a queued application; the user
+            # doesn't want it re-logged as manual review on every run.
+            portal_skipped.append({"row": i, "company": company, "ats": "incomplete-log-row"})
+            continue
         if link in done:
             skipped.append({"row": i, "company": company, "link": link})
             continue
@@ -226,9 +231,6 @@ def build_queue(log_values: list, history_values: list, max_forms: int, repo: Pa
         item["resume"] = find_document(company, role, repo / "cv", "resume")
         item["cover_letter"] = find_document(company, role, repo / "cover_letters", "cover")
         if item["tier"] == "manual":
-            manual.append(item)
-        elif not company or not role:
-            item["tier"], item["reason"] = "manual", "Log row missing company or position"
             manual.append(item)
         elif item["resume"] is None:
             item["tier"] = "manual"

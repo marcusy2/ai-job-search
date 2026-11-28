@@ -151,6 +151,13 @@ class QueueTest(unittest.TestCase):
         self.assertEqual(len(aa.build_queue(values, hist, 10, self.repo, skip_dry_ready=True)["forms"]), 1)
 
 
+    def test_bare_link_row_skipped_not_manual(self):
+        values = self.log(["", "", "", "", "", "", "", "https://researchpark.illinois.edu/job/x/", ""])
+        q = aa.build_queue(values, [], 10, self.repo)
+        self.assertEqual((q["forms"], q["manual"]), ([], []))
+        self.assertEqual(q["portal_skipped"][0]["ats"], "incomplete-log-row")
+
+
 class LocationTest(unittest.TestCase):
     def test_midwest(self):
         p = {"current_location": "San Mateo, CA", "midwest_location": "Champaign, IL"}

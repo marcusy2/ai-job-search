@@ -50,7 +50,7 @@ stop and report it rather than reconstructing the data by hand.
    `update_spreadsheet` (addSheet) and header row
    `Date | Log row | Company | Role | Link | Outcome | Blocker / unanswered question | Mode`, then use `[]`.
 3. `python tools/auto_apply.py queue --log RUN_DIR/log.json --history RUN_DIR/history.json --max <cap>`
-   - `portal_skipped`: Workday/ADP rows (config `skip_portals`). The user doesn't want them: don't open them,
+   - `portal_skipped`: Workday/ADP rows (config `skip_portals`) and Log rows missing company or position. The user doesn't want them: don't open them,
      don't write history rows for them, only give the count in the summary's Run notes.
    - `forms`: rows to open in the browser (link in H, B and G empty, CV PDF found, portal not account-gated).
    - `manual`: rows the script already routed (account-gated portal, no CV, missing company/role). Record them
