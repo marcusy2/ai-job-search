@@ -26,8 +26,17 @@ that blocks a row goes to Needs Manual Review with a reason, and the run moves o
    anything into a field except an answer produced under rule 2.
 4. **One submit per row, ever.** Click Submit at most once. If the result is unclear, mark `Unconfirmed submit` and
    never retry that row automatically (a double application looks worse than a missed one).
-5. **Never touch** Log columns A, E, F, H, I or J-T, the Results column G (except the single `applied` write below),
-   Internship Pipeline column N, Sheet3, or Ranking Rubric.
+5. **Never touch** Log columns A, E, F, H, I or J-T, or the Results column G (except the single `applied` write
+   below). The only tabs this skill writes are Log and `Auto-Apply Runs`; Open Postings, Companies, Networking,
+   Notes and Question Bank are read-only. **All status tracking lives in the Log** (user, 2026-11-28): never add a
+   status column or status text to any other tab.
+6. **No LinkedIn Easy Apply**, no fingerprint spoofing, no CAPTCHA services. Pacing (below) is the only "stealth".
+7. **Company cap: 2-3 roles per company, 3 max** (user, 2026-11-28), counting Log rows already submitted (date in B
+   or any result in G). General Dynamics divisions count as one company; RTX units (Collins, Raytheon, Pratt &
+   Whitney) stay separate. The queue script enforces this; rows past it are `over_company_cap`.
+8. **Grace Gong companies:** a company whose Companies `Source` is only "Grace Gong list" is auto-applied only when
+   Fit is A and "Outside aerospace?" is Yes. Aerospace/space/drone ones the user applies to personally. Never apply
+   to an international company. The queue script routes these to `personal`.
 6. **No LinkedIn Easy Apply**, no fingerprint spoofing, no CAPTCHA services. Pacing (below) is the only "stealth".
 
 ## Step 0 - Setup
@@ -49,7 +58,11 @@ stop and report it rather than reconstructing the data by hand.
 2. History tab `Auto-Apply Runs` (`A1:H2000`) -> `RUN_DIR/history.json`. If the tab doesn't exist, create it with
    `update_spreadsheet` (addSheet) and header row
    `Date | Log row | Company | Role | Link | Outcome | Blocker / unanswered question | Mode`, then use `[]`.
-3. `python tools/auto_apply.py queue --log RUN_DIR/log.json --history RUN_DIR/history.json --max <cap>`
+3. Companies: `get_values` on `Companies!A1:I1000` -> `RUN_DIR/companies.json` (A Company | B Source |
+   C What they do | D Location | E Sector | F Fit | G Outside aerospace? | H Connections / club notes |
+   I Openings note).
+4. `python tools/auto_apply.py queue --log RUN_DIR/log.json --history RUN_DIR/history.json --companies RUN_DIR/companies.json --max <cap>`
+   (the per-company cap comes from config `company_cap`)
    - `portal_skipped`: Workday/ADP rows (config `skip_portals`) and Log rows missing company or position. The user doesn't want them: don't open them,
      don't write history rows for them, only give the count in the summary's Run notes.
    - `forms`: rows to open in the browser (link in H, B and G empty, CV PDF found, portal not account-gated).
@@ -58,10 +71,14 @@ stop and report it rather than reconstructing the data by hand.
    - `over_cap`: list them in the summary as "Queued for tomorrow".
    - `already_done`: finished in a past run; ignore. (The user re-queues a role by changing its Outcome cell
      to `Retry`.)
-4. Question Bank: `get_values` on `'Question Bank'!A1:A1000` -> `RUN_DIR/qbank_raw.json`, then
+   - `personal`: Grace Gong companies outside the approved auto-apply set (rule 8). Don't open them and don't
+     write history rows; list them in the summary under "Held for you to apply personally".
+   - `over_company_cap`: rule 7. Don't open them and don't write history rows; list them under "Over company cap".
+5. Question Bank: `get_values` on `'Question Bank'!A1:A1000` -> `RUN_DIR/qbank_raw.json`, then
    `python tools/auto_apply.py qbank --values RUN_DIR/qbank_raw.json` -> Q/A pairs.
-5. Contacts: `get_values` on `'Company Status'!A1:F250` and `'Internship Pipeline'!D1:K299` (Company + Club notes).
-6. `python tools/auto_apply.py delays --n <len(forms)>` -> one between-application pause per form.
+6. Contacts: `get_values` on `Networking!A1:K300` -> `RUN_DIR/networking.json` (A Name | B LinkedIn |
+   C Company | D Role / Team | E UIUC alum? | ... | I Status). Company connections come from `companies.json` col H.
+7. `python tools/auto_apply.py delays --n <len(forms)>` -> one between-application pause per form.
 
 ## Step 2 - Each form row (in queue order)
 Track for every row: outcome, blocker, every field you filled and its value source, uploads, and generated text.
@@ -158,8 +175,9 @@ Re-read the row and confirm the values landed.
 The cap counts form rows opened in the browser (dry or live). Script-routed manual rows don't count.
 
 ## Step 3 - Networking contacts
-For each Applied (or, in a dry run, ready-to-submit) row, collect what the sheet already knows about the company: Company Status
-`Club notes`, Pipeline `Club notes` / `Where it came from`, and whether it's on Sheet3. Don't search for new people.
+For each Applied (or, in a dry run, ready-to-submit) row, collect what the sheet already knows about the company:
+Companies `Source` and `Connections / club notes` (col H), and any Networking rows for that company (name, role,
+UIUC alum?, status). Don't search for new people and don't write to Networking.
 
 ## Step 4 - History rows (one row per role, final outcome only)
 The user wants exactly **one row per role** holding its final outcome; no attempt history.
@@ -186,7 +204,7 @@ can happen in one day: if the file exists, Read it and put this run's section **
 ### Company - Role
 - Link: <url>
 - CV: <file>  | Cover letter: <file or none>
-- Networking: <club notes / LRI relation / Sheet3, or "none on file">
+- Networking: <Companies col H notes + Networking contacts at this company, or "none on file">
 - Why-company answer (detector <score>, PASS): <text>
 - Other answers: <question -> bank question used>
 
@@ -196,6 +214,8 @@ can happen in one day: if the file exists, Read it and put this run's section **
 - Blocker: <exact reason or "Unanswered required question: ...">
 - Done so far: <e.g. "form filled, stopped at password field">
 
+## Held for you to apply personally (Grace Gong aerospace / not Fit A)
+## Over company cap (already 3 at that company)
 ## Queued for tomorrow (over cap)
 ## Run notes (errors, detector not run, unverified facts)
 ```

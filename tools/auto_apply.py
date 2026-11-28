@@ -6,6 +6,8 @@ script does the parts that should never vary between runs:
 
     triage URL                      which portal is this, and can it be auto-applied?
     queue --log F --history F       pick today's rows from the Log tab (JSON dumps)
+          [--companies F]           ... holding back Grace Gong companies not approved for auto-apply
+    postings-cap --postings F --log F   Open Postings rows to keep under the per-company rule
     qbank --values F                parse the Question Bank tab into Q/A pairs
     delays --n N                    random human-like pauses for the run
 
@@ -164,6 +166,92 @@ def _cell(row: list, idx: int) -> str:
     return row[idx].strip() if idx < len(row) and isinstance(row[idx], str) else ""
 
 
+_CORP_WORDS = {"inc", "corp", "corporation", "technologies", "technology", "industries", "company",
+               "co", "llc", "ltd", "the"}
+_PARENT_UNITS = ("rtx", "textron")  # "RTX (Collins)" -> the unit in parentheses is the company
+
+
+def company_key(name: str) -> str:
+    """Normalized company name used for the per-company cap and Companies-tab lookups.
+
+    General Dynamics divisions (GDMS, GD OTS, ...) collapse to one company (user rule).
+    RTX units stay separate: "RTX (Collins)" and "Collins Aerospace (RTX)" both -> "collins aerospace".
+    """
+    low = name.lower().strip()
+    if "general dynamics" in low or re.match(r"^gd\b", low):
+        return "general dynamics"
+    for unit, key in (("collins", "collins aerospace"), ("raytheon", "raytheon"), ("pratt", "pratt whitney")):
+        if unit in low:
+            return key
+    paren = re.search(r"\(([^)]*)\)", low)
+    if paren and low.split("(")[0].strip() in _PARENT_UNITS:
+        low = paren.group(1)
+    words = [w for w in _norm(low).split() if w not in _CORP_WORDS]
+    return " ".join(words)
+
+
+def same_company(a: str, b: str) -> bool:
+    """Keys match exactly, or a one-word key is the first word of the other ("varda" ~ "varda space")."""
+    if not a or not b:
+        return False
+    if a == b:
+        return True
+    short, long_ = sorted((a, b), key=lambda k: len(k.split()))
+    return len(short.split()) == 1 and long_.split()[0] == short
+
+
+def applied_counts(log_values: list) -> dict:
+    """company_key -> number of Log rows already submitted (date applied in B or any result in G)."""
+    counts = {}
+    for row in log_values[1:]:
+        company = _cell(row, 4)
+        if company and (_cell(row, 1) or _cell(row, 6)):
+            key = company_key(company)
+            counts[key] = counts.get(key, 0) + 1
+    return counts
+
+
+def count_for(company: str, counts: dict) -> int:
+    key = company_key(company)
+    return sum(n for k, n in counts.items() if same_company(key, k))
+
+
+def companies_lookup(companies_values: list) -> dict:
+    """Companies tab dump -> company_key -> {source, fit, outside_aerospace, connections}.
+
+    Companies columns: A Company | B Source | C What they do | D Location | E Sector | F Fit |
+    G Outside aerospace? | H Connections / club notes | I Openings note.
+    """
+    out = {}
+    for row in companies_values[1:]:
+        if _cell(row, 0):
+            out[company_key(_cell(row, 0))] = {
+                "company": _cell(row, 0), "source": _cell(row, 1), "fit": _cell(row, 5),
+                "outside_aerospace": _cell(row, 6), "connections": _cell(row, 7),
+            }
+    return out
+
+
+def company_info(company: str, lookup: dict):
+    key = company_key(company)
+    if key in lookup:
+        return lookup[key]
+    return next((v for k, v in lookup.items() if same_company(key, k)), None)
+
+
+def personal_only_reason(info) -> str:
+    """Grace Gong companies the user hasn't approved for auto-apply (user, 2026-11-28).
+
+    Only Fit A companies outside aerospace may be auto-applied when the company came from
+    the Grace Gong list alone. Aerospace/space/drone ones the user applies to personally.
+    """
+    if not info or info["source"].strip().lower() != "grace gong list":
+        return ""
+    if info["fit"].upper().startswith("A") and info["outside_aerospace"].lower() == "yes":
+        return ""
+    return "Grace Gong company outside the approved auto-apply set (aerospace or not Fit A): apply personally"
+
+
 def _history_urls(history_values: list) -> set:
     """Links already finished (applied / manual review / unconfirmed submit).
 
@@ -192,18 +280,24 @@ def _dry_ready_urls(history_values: list) -> set:
 
 
 def build_queue(log_values: list, history_values: list, max_forms: int, repo: Path = REPO,
-                skip_portals=(), skip_dry_ready: bool = False) -> dict:
+                skip_portals=(), skip_dry_ready: bool = False, companies_values=None,
+                company_cap: int = 0) -> dict:
     """Log rows ready to apply: link in H, date applied (B) and results (G) empty.
 
     Log columns: A due date | B date applied | C Cover Letter? | D questions? |
     E company | F position | G results | H website | I location.
     skip_portals: ATS names (e.g. workday, adp) dropped silently: not opened, not logged.
     skip_dry_ready: also skip rows whose latest outcome is a clean dry run.
+    companies_values: Companies tab dump; Grace Gong-only companies outside the approved set go to
+        `personal` (not opened, no history row).
+    company_cap: max submitted roles per company (Log rows already applied + this run). Rows past it
+        go to `over_company_cap` (not opened, no history row). 0 = no cap.
     """
     done = _history_urls(history_values)
     if skip_dry_ready:
         done |= _dry_ready_urls(history_values)
-    forms, manual, skipped, portal_skipped = [], [], [], []
+    lookup = companies_lookup(companies_values or [])
+    forms, manual, skipped, portal_skipped, personal = [], [], [], [], []
     for i, row in enumerate(log_values[1:], start=2):
         company, role, link = _cell(row, 4), _cell(row, 5), _cell(row, 7)
         if not link.startswith("http") or _cell(row, 1) or _cell(row, 6):
@@ -228,6 +322,10 @@ def build_queue(log_values: list, history_values: list, max_forms: int, repo: Pa
         if item["ats"] in skip_portals:
             portal_skipped.append({"row": i, "company": company, "ats": item["ats"]})
             continue
+        reason = personal_only_reason(company_info(company, lookup))
+        if reason:
+            personal.append({"row": i, "company": company, "role": role, "link": link, "reason": reason})
+            continue
         item["resume"] = find_document(company, role, repo / "cv", "resume")
         item["cover_letter"] = find_document(company, role, repo / "cover_letters", "cover")
         if item["tier"] == "manual":
@@ -241,13 +339,58 @@ def build_queue(log_values: list, history_values: list, max_forms: int, repo: Pa
     # Known no-account portals before career sites (which often hand off to Workday),
     # then rows with a due date (soonest first), then Log order.
     forms.sort(key=lambda r: (r["tier"] != "auto", _due_key(r["due"]), r["row"]))
+    over_company_cap = []
+    if company_cap:
+        counts, kept = applied_counts(log_values), []
+        for item in forms:
+            n = count_for(item["company"], counts)
+            if n >= company_cap:
+                item["reason"] = f"Company cap: already {n} application(s) at {item['company']} (max {company_cap})"
+                over_company_cap.append(item)
+                continue
+            key = company_key(item["company"])
+            counts[key] = counts.get(key, 0) + 1  # this run's submit counts toward the next row
+            kept.append(item)
+        forms = kept
     return {
         "forms": forms[:max_forms],
         "over_cap": forms[max_forms:],
         "manual": manual,
         "already_done": skipped,
         "portal_skipped": portal_skipped,
+        "personal": personal,
+        "over_company_cap": over_company_cap,
     }
+
+
+def cap_postings(postings_values: list, log_values: list, stop_at: int = 2, cap: int = 3) -> dict:
+    """Apply the per-company rule to the Open Postings tab (rows already in score order).
+
+    Open Postings columns: A Tier | B Score | C Company | D Role | E Location | F Term | G Posted |
+    H Apply link | I Why | J Citizen pool | K In Log?.
+    A company with >= stop_at roles already applied in the Log gets no more postings (user,
+    2026-11-28). Otherwise keep its best (cap - applied) rows. Rows marked In Log = Yes are dropped.
+    """
+    counts, taken = applied_counts(log_values), {}
+    keep, drop = [], []
+    for i, row in enumerate(postings_values[1:], start=2):
+        company = _cell(row, 2)
+        if not company:
+            continue
+        entry = {"row": i, "company": company, "role": _cell(row, 3), "link": _cell(row, 7)}
+        if _cell(row, 10).lower() == "yes":
+            drop.append({**entry, "reason": "already in Log"})
+            continue
+        n = count_for(company, counts)
+        key = company_key(company)
+        if n >= stop_at:
+            drop.append({**entry, "reason": f"already applied to {n} roles at this company"})
+        elif n + taken.get(key, 0) >= cap:
+            drop.append({**entry, "reason": f"company cap ({cap} incl. {n} applied)"})
+        else:
+            taken[key] = taken.get(key, 0) + 1
+            keep.append(entry)
+    return {"keep": keep, "drop": drop}
 
 
 def _due_key(due: str):
@@ -346,6 +489,13 @@ def main(argv=None) -> int:
     q.add_argument("--max", type=int, default=config.get("max_applications_per_day", 10))
     q.add_argument("--repo", type=Path, default=REPO, help="checkout whose cv/ and cover_letters/ to search")
     q.add_argument("--skip-dry-ready", action="store_true", help="dry mode: skip rows already dry-run clean")
+    q.add_argument("--companies", help="Companies tab dump (Grace Gong auto-apply gate)")
+    q.add_argument("--company-cap", type=int, default=config.get("company_cap", 3))
+    pc = sub.add_parser("postings-cap", help="Open Postings rows to keep/drop under the per-company rule")
+    pc.add_argument("--postings", required=True)
+    pc.add_argument("--log", required=True)
+    pc.add_argument("--stop-at", type=int, default=config.get("company_stop_at", 2))
+    pc.add_argument("--cap", type=int, default=config.get("company_cap", 3))
     b = sub.add_parser("qbank")
     b.add_argument("--values", required=True)
     d = sub.add_parser("delays")
@@ -378,7 +528,11 @@ def main(argv=None) -> int:
     elif args.cmd == "queue":
         out = build_queue(_load_values(args.log), _load_values(args.history), args.max, args.repo,
                           skip_portals=tuple(config.get("skip_portals", [])),
-                          skip_dry_ready=args.skip_dry_ready)
+                          skip_dry_ready=args.skip_dry_ready,
+                          companies_values=_load_values(args.companies) if args.companies else None,
+                          company_cap=args.company_cap)
+    elif args.cmd == "postings-cap":
+        out = cap_postings(_load_values(args.postings), _load_values(args.log), args.stop_at, args.cap)
     elif args.cmd == "qbank":
         out = parse_question_bank(_load_values(args.values))
     else:

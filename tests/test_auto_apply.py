@@ -158,6 +158,60 @@ class QueueTest(unittest.TestCase):
         self.assertEqual(q["portal_skipped"][0]["ats"], "incomplete-log-row")
 
 
+    def test_company_cap_counts_applied_and_this_run(self):
+        thermal = "Thermal Engineering Intern (Summer 2027)"
+        values = self.log(
+            ["", "11/25", "", "", "Muon Space", "A", "applied", "https://job-boards.greenhouse.io/m/jobs/9", ""],
+            ["", "", "", "", "Muon Space", "B", "rejected", "https://job-boards.greenhouse.io/m/jobs/8", ""],
+            ["", "", "", "", "Muon Space", thermal, "", "https://job-boards.greenhouse.io/m/jobs/1", ""],
+            ["", "", "", "", "Muon Space", thermal, "", "https://job-boards.greenhouse.io/m/jobs/2", ""],
+        )
+        q = aa.build_queue(values, [], 10, self.repo, company_cap=3)
+        self.assertEqual([f["row"] for f in q["forms"]], [4])
+        self.assertEqual([f["row"] for f in q["over_company_cap"]], [5])
+        self.assertEqual(len(aa.build_queue(values, [], 10, self.repo)["forms"]), 2)  # no cap
+
+    def test_grace_gong_gate(self):
+        companies = [["Company", "Source", "What", "Loc", "Sector", "Fit", "Outside aerospace?", "Conn"],
+                     ["Muon Space", "Grace Gong list", "", "", "Aerospace", "A: hands-on hardware", "No", ""],
+                     ["Vast", "LRI list + Grace Gong", "", "", "Aerospace", "A: hands-on hardware", "No", ""]]
+        values = self.log(
+            ["", "", "", "", "Muon Space", "Thermal Engineering Intern (Summer 2027)", "", "https://job-boards.greenhouse.io/m/jobs/1", ""],
+            ["", "", "", "", "Vast", "Emerging Talent - Manufacturing Engineering Internship", "", "https://boards.greenhouse.io/vast/jobs/1", ""],
+        )
+        q = aa.build_queue(values, [], 10, self.repo, companies_values=companies)
+        self.assertEqual([p["company"] for p in q["personal"]], ["Muon Space"])
+        self.assertEqual([f["company"] for f in q["forms"]], ["Vast"])
+        companies[1][6] = "Yes"
+        q = aa.build_queue(values, [], 10, self.repo, companies_values=companies)
+        self.assertEqual(q["personal"], [])
+
+
+class CompanyTest(unittest.TestCase):
+    def test_keys(self):
+        k = aa.company_key
+        self.assertEqual(k("General Dynamics Mission Systems"), k("General Dynamics OTS"))
+        self.assertEqual(k("RTX (Collins)"), k("Collins Aerospace (RTX)"))
+        self.assertNotEqual(k("RTX (Collins)"), k("RTX (Raytheon)"))
+        self.assertEqual(k("K2 Space Corporation"), k("K2 Space"))
+        self.assertTrue(aa.same_company(k("varda"), k("Varda Space Industries")))
+        self.assertTrue(aa.same_company(k("Northrop"), k("Northrop Grumman")))
+        self.assertFalse(aa.same_company(k("GE"), k("General Atomics")))
+
+    def test_cap_postings(self):
+        log = [HEADER,
+               ["", "11/1", "", "", "Relativity Space", "x", "applied", "", ""],
+               ["", "11/1", "", "", "Relativity Space", "y", "applied", "", ""],
+               ["", "11/1", "", "", "CesiumAstro", "z", "applied", "", ""]]
+        post = [["Tier"]] + [["A", "70", c, r, "", "", "", "", "", "", ""] for c, r in [
+            ("Relativity Space", "1"), ("CesiumAstro", "2"), ("CesiumAstro", "3"), ("CesiumAstro", "4"),
+            ("Freeform", "5"), ("Freeform", "6"), ("Freeform", "7"), ("Freeform", "8")]]
+        post[5][10] = "Yes"  # Freeform role 5 already in Log
+        out = aa.cap_postings(post, log)
+        self.assertEqual([r["role"] for r in out["keep"]], ["2", "3", "6", "7", "8"])
+        self.assertIn("already applied to 2", out["drop"][0]["reason"])
+
+
 class LocationTest(unittest.TestCase):
     def test_midwest(self):
         p = {"current_location": "San Mateo, CA", "midwest_location": "Champaign, IL"}

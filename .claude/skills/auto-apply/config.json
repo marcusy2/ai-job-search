@@ -7,9 +7,12 @@
     "log": "Log",
     "history": "Auto-Apply Runs",
     "question_bank": "Question Bank",
-    "company_status": "Company Status",
-    "pipeline": "Internship Pipeline"
+    "companies": "Companies",
+    "networking": "Networking",
+    "open_postings": "Open Postings"
   },
+  "company_cap": 3,
+  "company_stop_at": 2,
   "write_results_applied": true,
   "skip_portals": ["workday", "adp"],
   "why_company_detector_retries": 3,
