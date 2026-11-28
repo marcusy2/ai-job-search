@@ -168,6 +168,11 @@ The user wants exactly **one row per role** holding its final outcome; no attemp
   `RUN_DIR/history.json`, then `python tools/auto_apply.py history-slot --history RUN_DIR/history.json --link <url>`:
   a row number -> `update_values` that row `A:H`, overwriting it (this is how a `Retry` row gets its new result);
   `append` -> `append_values` a new row.
+- **The user edits this tab by hand (deletes rows), even mid-run.** So re-read it with `get_values`
+  *immediately* before each write (never reuse an earlier dump); a row number from minutes ago can now point at a
+  different role. Right before `update_values`, read that single row and confirm its column E is this link; if
+  not, re-read and look up again. After writing, re-read the tab and confirm exactly one row has this link; if a
+  second one exists, clear it (`update_values` with blanks) and note it in Run notes.
 - Row: `<YYYY-MM-DD> | <Log row> | Company | Role | Link | Outcome | Blocker or unanswered question (blank if Applied) | live`.
 
 ## Step 5 - Morning summary
