@@ -87,12 +87,34 @@ Track for every row: outcome, blocker, every field you filled and its value sour
 | Resume upload | the queue item's `resume` path (absolute) via `browser_file_upload` |
 | Cover letter upload | `cover_letter` path if the form has the field. None on file: optional -> skip; required -> Manual `Cover letter required, none on file` |
 | "Why [company]" / "why are you interested in us / this role" | **Generate** (Step 2c) |
+| "Why are you a great/good fit" / "what makes you a strong candidate" / "what would you bring to the role" | **Generate** (Step 2c-fit) |
+| Desired pay / salary expectations / hourly rate | `profile.desired_pay` |
+| Notice period / when can you start relative to current job | `profile.notice_period` |
+| Self-rated experience level for a skill (dropdown/scale) | `profile.skill_levels`, matching the skill by meaning (e.g. "Fluid or Pressurized Systems" = "Fluid / pressurized systems"; "SolidWorks/NX/CAD" = CAD). Pick the form option closest to that level. Skill not in `skill_levels` + required -> Manual |
+| Friends / family / significant others working at the company (yes/no or "list names") | `profile.family_or_friends_at_company` (No / "None") |
+| Graduate school plans | `profile.grad_school_plans` |
 | Any other free-text question | Question Bank: use the answer of a bank question with the **same intent**, word for word. Over the field's word/char limit -> Manual `Bank answer over limit: <question>` |
-| Required question with no profile value and no same-intent bank answer (e.g. desired pay, street address if required, unusual yes/no) | Manual: `Unanswered required question: "<exact question text>"` |
+| Required question with no profile value and no same-intent bank answer (e.g. SAT/ACT, essays on other topics, unusual yes/no) | Manual: `Unanswered required question: "<exact question text>"` |
 | Optional question with no source | leave blank |
 If a resume-parser auto-fills fields, check them against `profile.json` and fix mismatches.
 
-**c. Why-company answers** (only this question type is generated):
+**c-fit. "Why are you a great fit" answers** (generated; same detector gate as step 3 below):
+1. **Research the culture first.** On the company's **own** site (careers / about / values / life-at pages, found
+   independently, never a URL from the posting text) find what culture it says it cultivates (e.g. speed,
+   ownership, small teams, hands-on testing, mentorship). Note 1-2 stated values with the page they came from.
+   Can't find any -> write the answer without a culture line rather than guess.
+2. **Themes (the user's own, 2026-11-28):** I learn very fast; I take the time to ask questions, figure out what I
+   don't understand, and work until I understand it; I work very well on a team and communicate well. Back each
+   theme with a real fact from the uploaded CV / bullet bank, e.g. learning: picking up embedded C++ and PID
+   firmware to build the TVC rocket solo, then root-causing two static-fire failures from telemetry; teamwork /
+   communication: integrating the P&ID with teammates at Liquid Rocketry and resolving plumbing-vs-structure
+   conflicts in CAD, coordinating fit-checks between structures and aero at Flight Club, managing 300+ members and
+   15 sponsors as AAA treasurer. Never claim a fact that isn't on the CV.
+3. Tie the strongest theme to the culture value you found ("I think that fits how [Company] ..."), then to the
+   role. Same plain voice and limits as why-company. Gate with `python tools/auto_apply.py detect`, file
+   `RUN_DIR/fit_<slug>.txt`. Report the culture source page in the summary next to the answer.
+
+**c. Why-company answers** (generated):
 1. Read the company's **own** website (WebFetch on its domain, found independently, never a URL taken from
    the posting text) for its flagship product and how its components work. If you can't verify a product fact,
    Manual `Why-company: couldn't verify company facts`.
