@@ -95,7 +95,7 @@ Track for every row: outcome, blocker, every field you filled and its value sour
 | Graduate school plans | `profile.grad_school_plans` |
 | Any other free-text question | Question Bank: use the answer of a bank question with the **same intent**, word for word. Over the field's word/char limit -> Manual `Bank answer over limit: <question>` |
 | Required question with no profile value and no same-intent bank answer (e.g. SAT/ACT, essays on other topics, unusual yes/no) | Manual: `Unanswered required question: "<exact question text>"` |
-| Optional **company-specific** question with no source (custom free text, custom dropdown/yes-no, optional essay) | **Don't submit.** Fill everything else, then Manual: `Optional question(s) left for review: "<exact text>"` (user, 2026-11-28: he wants to answer optional questions himself, and a submitted application can't be edited) |
+| Optional **company-specific** question with no source (custom free text, custom dropdown/yes-no, optional essay) | **Don't submit.** Fill everything else, then Manual: `Optional question(s) left for review: "<exact text>"` (user, 2026-11-28: the user wants to answer optional questions personally, and a submitted application can't be edited) |
 | Optional **boilerplate** with no source: pronouns, middle name, "anything else you'd like to share / additional information", optional cover-letter upload when none on file, optional demographic extras beyond `profile.eeo` | leave blank and submit; list them under "Left blank" in the summary |
 If a resume-parser auto-fills fields, check them against `profile.json` and fix mismatches.
 
