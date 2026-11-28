@@ -1,0 +1,12 @@
+{
+  "browser": {
+    "launchOptions": {
+      "args": ["--lang=en-US"]
+    },
+    "contextOptions": {
+      "locale": "en-US",
+      "timezoneId": "America/Chicago",
+      "extraHTTPHeaders": { "Accept-Language": "en-US,en;q=0.9" }
+    }
+  }
+}
